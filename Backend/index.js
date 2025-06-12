@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const { connection } = require("./config/db.js");
 
+const medicamentosRoutes = require("./routes/medicamentosRoutes");
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -20,6 +22,8 @@ connection.connect((error) => {
 app.get("/", (req, res) => {
   res.status(200).json({ message: "API ok" });
 });
+
+app.use("/api/medicamentos", medicamentosRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
