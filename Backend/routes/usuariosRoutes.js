@@ -8,7 +8,7 @@ const {
   createUsuario,
 } = require("../controllers/usuariosController");
 
-router.route("/").get(getUsuarios);
+router.get("/", getUsuarios);
 router.post("/create", createUsuario);
 router.get("/:id", getUsuarioById);
 router.get("/dni/:dni", getUsuarioByDni);
