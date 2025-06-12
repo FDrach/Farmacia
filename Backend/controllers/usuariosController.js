@@ -102,9 +102,63 @@ const updateUsuario = (req, res) => {
   });
 };
 
+const createUsuario = (req, res) => {
+  const { dni, nombre, tipo, Horario, Sueldo, usuario, contrasena } = req.body;
+
+  if (
+    !dni ||
+    !nombre ||
+    !tipo ||
+    !Horario ||
+    !Sueldo ||
+    !usuario ||
+    !contrasena
+  ) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  const checkQuery = "SELECT * FROM Usuarios WHERE dni = ? OR usuario = ?";
+  connection.query(checkQuery, [dni, usuario], (checkError, checkResults) => {
+    if (checkError) {
+      console.error("Error checking for existing user:", checkError);
+      return res.status(500).json({ message: "Error creating user." });
+    }
+
+    if (checkResults.length > 0) {
+      const existingUser = checkResults[0];
+      if (existingUser.dni === dni) {
+        return res
+          .status(409)
+          .json({ message: `A user with DNI ${dni} already exists.` });
+      }
+      if (existingUser.usuario === usuario) {
+        return res.status(409).json({
+          message: `A user with username '${usuario}' already exists.`,
+        });
+      }
+    }
+
+    const insertQuery =
+      "INSERT INTO Usuarios (dni, nombre, tipo, Horario, Sueldo, usuario, contrasena) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const values = [dni, nombre, tipo, Horario, Sueldo, usuario, contrasena];
+
+    connection.query(insertQuery, values, (insertError, insertResults) => {
+      if (insertError) {
+        console.error("Error creating new user:", insertError);
+        return res.status(500).json({ message: "Error creating user." });
+      }
+      res.status(201).json({
+        message: "User created successfully.",
+        userId: insertResults.insertId,
+      });
+    });
+  });
+};
+
 module.exports = {
   getUsuarios,
   getUsuarioById,
   getUsuarioByDni,
   updateUsuario,
+  createUsuario,
 };

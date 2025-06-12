@@ -5,9 +5,11 @@ const {
   getUsuarioById,
   getUsuarioByDni,
   updateUsuario,
+  createUsuario,
 } = require("../controllers/usuariosController");
 
-router.get("/", getUsuarios);
+router.route("/").get(getUsuarios);
+router.post("/create", createUsuario);
 router.get("/:id", getUsuarioById);
 router.get("/dni/:dni", getUsuarioByDni);
 router.put("/:id", updateUsuario);
