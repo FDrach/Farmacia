@@ -3,12 +3,12 @@ const cors = require("cors");
 const { connection } = require("./config/db.js");
 
 const medicamentosRoutes = require("./routes/medicamentosRoutes");
+const ventasRoutes = require("./routes/ventasRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
-
 app.use(express.json());
 
 connection.connect((error) => {
@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/medicamentos", medicamentosRoutes);
+app.use("/api/ventas", ventasRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
