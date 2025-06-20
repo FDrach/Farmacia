@@ -34,6 +34,26 @@ body {
   color: #222;
 }
 
+/* Haz que el body y el root ocupen toda la altura */
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Haz que el contenedor principal use flex y crezca */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* El contenido principal debe crecer y empujar el footer hacia abajo */
+.main-content {
+  flex: 1;
+}
+
 /* Tarjetas y textos de ayuda */
 .card {
   padding: 2em;
@@ -69,4 +89,115 @@ body {
 
 .navbar-list li a:hover {
   color: #61dafb;
+}
+
+.footer {
+  background: #384278;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;                /* Menos espacio entre columnas */
+  padding: 1.5rem 1rem;     /* Menos padding */
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 160px;         /* Más angosto */
+}
+
+.footer-col h3 {
+  margin-bottom: 0.7rem;
+  font-size: 1.1rem;        /* Más chico */
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 0.6rem;    /* Menos espacio entre items */
+  font-size: 1rem;          /* Más chico */
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.icon {
+  font-size: 1.3rem;        /* Más chico */
+  width: 32px;
+  height: 32px;
+}
+
+.footer-social .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #fff;
+  margin-bottom: 0.3rem;
+  /* Elimina padding/margin internos si los hay */
+  box-sizing: border-box;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+
+.footer-social a {
+  text-decoration: none !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+
+.footer-social .facebook {
+  background: #3b5998;
+}
+
+.footer-social .instagram {
+  background: #e1306c;
+}
+
+.footer-social .whatsapp {
+  background: #25d366;
+}
+
+.footer-form h3 {
+  margin-bottom: 0.5rem;
+}
+
+.footer-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;              /* Menos espacio entre campos */
+}
+
+.footer-form input,
+.footer-form textarea {
+  padding: 0.4rem;          /* Menos padding */
+  font-size: 1rem;          /* Más chico */
+  margin-bottom: 0.2rem;
+}
+
+.footer-form textarea {
+  min-height: 60px;         /* Más bajo */
+}
+
+.footer-form button {
+  padding: 0.4rem 1.2rem;   /* Botón más pequeño */
+  font-size: 1rem;
+  margin-top: 0.2rem;
 }
