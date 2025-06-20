@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
-
-import logo from '../assets/logofar.png' // Ajusta la ruta si es necesario
+import logo from '../assets/logofar.png'
 
 export default function Navbar() {
   return (
@@ -13,6 +12,17 @@ export default function Navbar() {
           style={{ height: "48px", marginRight: "1rem" }}
         />
       </Link>
+      <form className="navbar-search">
+        <input
+          type="text"
+          placeholder=" ¿Que esta buscando? "
+          className="navbar-search-input"
+          id="buscador"
+        />
+        <button type="submit" className="navbar-search-btn">
+          <i className="fas fa-search"></i>
+        </button>
+      </form>
       <ul className="navbar-list navbar-list-center">
         <li>
           <Link to="/Ofertas">Ofertas</Link>

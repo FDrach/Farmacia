@@ -4,6 +4,8 @@ import HomePages from "./pages/HomePages"
 import Ofertas from "./components/ofertas"
 import Productos from "./components/productos"
 import Footer from "./components/footer"
+import Login from "./components/login"
+import Carrito from "./components/carrito"
 import "./App.css"
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
             <Route path="/" element={<HomePages />} />
             <Route path="/Ofertas" element={<Ofertas />} />
             <Route path="/Productos" element={<Productos />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Carrito" element={<Carrito />} />
           </Routes>
         </div>
       </BrowserRouter>
