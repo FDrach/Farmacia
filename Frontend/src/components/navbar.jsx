@@ -1,48 +1,69 @@
 import { Link } from "react-router-dom"
 import logo from '../assets/logofar.png'
+import { useState } from "react";
+import ModalLogin from "./ModalLogin";
+import { useBodyScrollLock } from "../hooks/Barra";
 
 export default function Navbar() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  useBodyScrollLock(drawerOpen);
+
   return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-logo-link">
-        <img
-          src={logo}
-          alt="Farmacia Logo"
-          className="navbar-logo"
-          style={{ height: "48px", marginRight: "1rem" }}
-        />
-      </Link>
-      <form className="navbar-search">
-        <input
-          type="text"
-          placeholder=" ¿Que esta buscando? "
-          className="navbar-search-input"
-          id="buscador"
-        />
-        <button type="submit" className="navbar-search-btn">
-          <i className="fas fa-search"></i>
-        </button>
-      </form>
-      <ul className="navbar-list navbar-list-center">
-        <li>
-          <Link to="/Ofertas">Ofertas</Link>
-        </li>
-        <li>
-          <Link to="/Productos">Productos</Link>
-        </li>
-      </ul>
-      <ul className="navbar-list navbar-list-right">
-        <li>
-          <Link to="/Login">
-            <i className="fas fa-user"></i> Login
+    <>
+      <nav className="navbar">
+        <div className="navbar-logo-link">
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Farmacia Logo"
+              className="navbar-logo"
+              style={{ height: "48px", marginRight: "1rem" }}
+            />
           </Link>
-        </li>
-        <li>
-          <Link to="/Carrito">
-            <i className="fas fa-shopping-cart"></i> Carrito
+          <button
+            className="drawer-menu-btn"
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Abrir menú"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+        <div className="navbar-list-center">
+          <form className="navbar-search">
+            <input
+              type="text"
+              className="navbar-search-input"
+              placeholder="¿Qué está buscando?"
+            />
+            <button className="navbar-search-btn" type="submit">
+              <i className="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+        <div className="navbar-list-right">
+          <Link to="#" className="navbar-link" onClick={() => setLoginOpen(true)}>
+            <i className="fas fa-user"></i> Iniciar sesión
           </Link>
-        </li>
-      </ul>
-    </nav>
-  )
+          <Link to="/carrito" className="navbar-link">
+            <i className="fas fa-shopping-cart"></i> Tu carrito
+          </Link>
+        </div>
+      </nav>
+      {/* Drawer lateral */}
+      <div className={`drawer-backdrop${drawerOpen ? " open" : ""}`} onClick={() => setDrawerOpen(false)} />
+      <aside className={`drawer${drawerOpen ? " open" : ""}`}>
+        <button className="drawer-close-btn" onClick={() => setDrawerOpen(false)}>&times;</button>
+        <ul className="drawer-list">
+          <li><Link to="/Ofertas"><i className="fas fa-tags"></i> Ofertas</Link></li>
+          <li><Link to="/Productos"><i className="fas fa-box"></i> Productos</Link></li>
+          {/* Agrega más enlaces aquí */}
+        </ul>
+      </aside>
+      <ModalLogin open={loginOpen} onClose={() => setLoginOpen(false)} />
+    </>
+  );
 }

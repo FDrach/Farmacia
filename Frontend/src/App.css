@@ -75,9 +75,12 @@ html, body {
 .navbar {
   display: flex;
   align-items: center;
-  background: #1a1a1a;
+  justify-content: center; /* Centra todos los elementos hijos horizontalmente */
   padding: 0 2rem;
-  min-height: 70px;
+  background: #181818;
+  height: 70px;
+  position: relative;
+  gap: 2rem;
 }
 
 .navbar-logo-link {
@@ -95,14 +98,17 @@ html, body {
 }
 
 .navbar-list-center {
-  flex: 1;
-  justify-content: flex-start;
-  gap: 2rem;
+  flex: 0 1 520px; /* No crece, ancho máximo de la barra de búsqueda */
+  display: flex;
+  justify-content: center;
 }
 
 .navbar-list-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
   justify-content: flex-end;
-  gap: 2rem;
+  flex: 0 1 auto;
 }
 
 .navbar-list-right,
@@ -114,7 +120,7 @@ html, body {
   justify-content: flex-end;
 }
 
-.navbar-list li a {
+.navbar-link {
   color: #fff;
   font-weight: bold;
   text-decoration: none;
@@ -122,10 +128,15 @@ html, body {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  transition: color 0.2s;
 }
 
-.navbar-list li a:hover {
+.navbar-link:hover {
   color: #3f83e9;
+}
+
+.navbar-link i {
+  font-size: 1.2rem;
 }
 
 /* Estilo para el buscador en el navbar */
@@ -363,4 +374,168 @@ html, body {
 .slick-dots li.slick-active button:before {
   color: #3f83e9;
   opacity: 1;
+}
+
+/* Botón menú hamburguesa */
+.drawer-menu-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 8px;
+}
+.drawer-menu-btn span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: #38b24a;
+  border-radius: 2px;
+}
+
+/* Drawer lateral */
+.drawer {
+  position: fixed;
+  top: 0;
+  left: -320px; /* Oculto completamente fuera de pantalla */
+  width: 270px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+  z-index: 2000;
+  transition: left 0.3s;
+  padding: 1.5rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.drawer.open {
+  left: 0; /* Se muestra */
+}
+.drawer-close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #38b24a;
+  align-self: flex-end;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+.drawer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.drawer-list li {
+  margin-bottom: 1.2rem;
+}
+.drawer-list a {
+  color: #222;
+  font-size: 1.1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  transition: color 0.2s;
+}
+.drawer-list a:hover {
+  color: #38b24a;
+}
+
+/* Fondo oscuro al abrir el drawer */
+.drawer-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Centrar la barra de búsqueda */
+.navbar-list-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilos para el modal de login */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.modal-login {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+  min-width: 340px;
+  max-width: 90vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #38b24a;
+  cursor: pointer;
+}
+
+.modal-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.modal-login-form label {
+  font-weight: 500;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.modal-login-form input {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.modal-login-btn {
+  background: #38b24a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.modal-login-btn:hover {
+  background: #2e8c3a;
 }
