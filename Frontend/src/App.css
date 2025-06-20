@@ -73,30 +73,59 @@ html, body {
 
 /* Navbar principal (puedes mover esto a navbar.css si prefieres) */
 .navbar {
+  display: flex;
+  align-items: center;
   background: #1a1a1a;
-  padding: 1rem 0;
-  margin-bottom: 2rem;
+  padding: 0 2rem;
+  min-height: 70px;
+}
+
+.navbar-logo-link {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
 }
 
 .navbar-list {
   display: flex;
-  justify-content: flex-start;
-  gap: 2rem;
+  align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.navbar-list-center {
+  flex: 1;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.navbar-list-right {
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.navbar-list-right,
+.navbar-list-center {
+  flex: 1;
+}
+
+.navbar-list-right {
+  justify-content: flex-end;
+}
+
 .navbar-list li a {
   color: #fff;
-  text-decoration: none;
   font-weight: bold;
-  font-size: 1.1rem;
-  transition: color 0.2s;
+  text-decoration: none;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .navbar-list li a:hover {
-  color: #61dafb;
+  color: #3f83e9;
 }
 
 .footer {

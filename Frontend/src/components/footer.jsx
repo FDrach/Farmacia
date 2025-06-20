@@ -17,7 +17,8 @@ export default function Footer() {
           <a href="#"><i className="fab fa-whatsapp icon whatsapp"></i></a>
         </div>
       </div>
-      <div className="footer-col footer-form">
+
+      {/* <div className="footer-col footer-form">
         <h3>ESCRIBÍNOS</h3>
         <form>
           <input type="text" placeholder="Nombre y Apellido" />
@@ -26,7 +27,8 @@ export default function Footer() {
           <textarea placeholder="Mensaje"></textarea>
           <button type="submit">ENVIAR</button>
         </form>
-      </div>
+      </div> */}
+
     </footer>
   )
 }
