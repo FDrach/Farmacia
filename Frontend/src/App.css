@@ -539,3 +539,67 @@ html, body {
 .modal-login-btn:hover {
   background: #2e8c3a;
 }
+
+/* Tarjeta de producto */
+.productos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.producto-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0001;
+  width: 220px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.producto-img-placeholder {
+  width: 100%;
+  height: 120px;
+  background: #f7f7f7;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.producto-nombre {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.producto-categorias {
+  color: #888;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.producto-precio {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #38b24a;
+}
+
+.producto-btn {
+  margin-top: 1rem;
+  background: #38b24a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.producto-btn:hover {
+  background: #2e8c3a;
+}
