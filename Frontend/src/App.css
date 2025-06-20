@@ -1,3 +1,6 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css');
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -40,6 +43,11 @@ html, body, #root {
   min-height: 100%;
   margin: 0;
   padding: 0;
+}
+
+/* Evita el desbordamiento horizontal */
+html, body {
+  overflow-x: hidden;
 }
 
 /* Haz que el contenedor principal use flex y crezca */
@@ -200,4 +208,69 @@ html, body, #root {
   padding: 0.4rem 1.2rem;   /* Botón más pequeño */
   font-size: 1rem;
   margin-top: 0.2rem;
+}
+
+/* Carrusel personalizado */
+.custom-carousel-container {
+  padding: 0;
+  margin: 2rem auto;
+  display: block;
+  max-width: 95vw;
+  width: 100%;
+  background: #f3f3f3;
+  border-radius: 32px;
+  box-sizing: border-box;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  background: none;
+}
+
+.carousel-img {
+  border-radius: 0;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 350px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: none;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Dots personalizados para el carrusel */
+.slick-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  width: 100%;
+  display: flex !important;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 2;
+}
+
+.slick-dots li {
+  margin: 0 6px;
+}
+
+.slick-dots li button:before {
+  font-size: 16px;
+  color: #384278;
+  opacity: 0.5;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #3f83e9;
+  opacity: 1;
 }

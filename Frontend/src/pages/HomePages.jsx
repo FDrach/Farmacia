@@ -1,6 +1,10 @@
-
-
+import Carrusel from "../components/Carrusel"
 
 export default function HomePages() {
-  return <h2>Inicio</h2>
+  return (
+    <div>
+      <Carrusel />
+      {/* Otros contenidos */}
+    </div>
+  )
 }
