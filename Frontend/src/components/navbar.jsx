@@ -21,6 +21,7 @@ export default function Navbar() {
   return (
     <>
       <nav className="navbar">
+        {/* ... (Navbar logo, search bar) ... */}
         <div className="navbar-logo-link">
           <Link to="/">
             <img
@@ -53,11 +54,19 @@ export default function Navbar() {
           </form>
         </div>
         <div className="navbar-list-right">
+          {/* Admin Link */}
+          {usuario && usuario.tipo === 'Administrador' && (
+            <Link to="/administrador" className="navbar-link">
+              <i className="fas fa-cogs"></i>
+              <span className="navbar-text">Administrar</span>
+            </Link>
+          )}
+
           {usuario ? (
-            <div className="navbar-link">
+            <div className="navbar-link" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               <i className="fas fa-user"></i>
               <span className="navbar-text">{usuario.nombre}</span>
-              <button onClick={handleLogout}>
+              <button onClick={handleLogout} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>
                 Salir
               </button>
             </div>
@@ -73,7 +82,7 @@ export default function Navbar() {
           </Link>
         </div>
       </nav>
-      {/* Drawer lateral */}
+      {/* ... (Drawer and Login Modal) ... */}
       <div className={`drawer-backdrop${drawerOpen ? " open" : ""}`} onClick={() => setDrawerOpen(false)} />
       <aside className={`drawer${drawerOpen ? " open" : ""}`}>
         <button className="drawer-close-btn" onClick={() => setDrawerOpen(false)}>×</button>
