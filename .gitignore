@@ -28,3 +28,6 @@ dist-ssr
 *.sln
 *.sw?
 
+Backend/node_modules/.bin/nodemon
+Backend/node_modules/.bin/nodetouch
+Backend/node_modules/.bin/semver
