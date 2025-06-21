@@ -110,7 +110,7 @@ export default function Navbar() {
           className="drawer-close-btn"
           onClick={() => setDrawerOpen(false)}
         >
-          ×
+          
         </button>
         <ul className="drawer-list">
           <li>

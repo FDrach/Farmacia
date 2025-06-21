@@ -604,332 +604,95 @@ html, body {
   background: #2e8c3a;
 }
 
-/* Oculta el texto de usuario y carrito en navbar en pantallas pequeñas */
+/* Carrusel de Categorías */
+.carrusel-categorias-container {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.carrusel-categorias-titulo {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.carrusel-categorias-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.carrusel-categorias-lista {
+  display: flex;
+  gap: 1.5rem;
+  overflow: hidden;
+  width: 1100px;
+  max-width: 95vw;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.carrusel-categorias-card {
+  min-width: 200px;
+  max-width: 220px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px #0002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  position: relative;
+  height: 240px; /* Fija la altura total de la card */
+}
+
+.carrusel-categorias-img {
+  width: 100%;
+  height: 120px; /* Fija la altura de la imagen */
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carrusel-categorias-nombre {
+  width: 100%;
+  min-height: 60px; /* Fija la altura del área de texto */
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #444;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.carrusel-categorias-btn {
+  font-size: 2rem;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  color: #38b24a;
+  padding: 0 12px;
+  transition: color 0.2s;
+}
+
+.carrusel-categorias-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+
 @media (max-width: 800px) {
   .navbar-link .navbar-text {
     display: none;
   }
-}
-/* ==========================================================================
-   Admin Page Styles
-   ========================================================================== */
-
-   .admin-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  }
-  
-  .admin-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1.5rem;
-  }
-  
-  .admin-nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
-  }
-  
-  .admin-nav-link {
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    color: #555;
-    font-weight: 500;
-    border-radius: 6px;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  
-  .admin-nav-link:hover {
-    background-color: #e9e9e9;
-    color: #111;
-  }
-  
-  .admin-nav-link.active {
-    background-color: #38b24a;
-    color: #fff;
-  }
-  
-  .admin-content {
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 6px;
-    border: 1px solid #eee;
-    min-height: 300px;
-  }
-  
-  .admin-welcome {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #777;
-    padding: 3rem 0;
-  }
-
-  /* ==========================================================================
-   Reusable Admin List & Form Styles
-   ========================================================================== */
-
-.admin-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.admin-list-item {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-  transition: box-shadow 0.2s;
-}
-
-.admin-list-item:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.item-main-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-
-.item-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.item-price {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #38b24a;
-}
-
-.item-details p {
-  margin: 0.25rem 0;
-  color: #6b7280;
-  font-size: 0.95rem;
-}
-
-.item-details strong {
-  color: #374151;
-}
-
-.item-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  border-top: 1px solid #f3f4f6;
-  padding-top: 1rem;
-}
-
-.btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.btn-edit {
-  background-color: #e5e7eb;
-  color: #374151;
-}
-.btn-edit:hover {
-  background-color: #d1d5db;
-}
-
-.btn-delete {
-  background-color: #fee2e2;
-  color: #b91c1c;
-}
-.btn-delete:hover {
-  background-color: #fecaca;
-}
-
-.btn-save {
-  background-color: #38b24a;
-  color: #fff;
-}
-.btn-save:hover {
-  background-color: #2e8c3a;
-}
-
-.btn-cancel {
-  background-color: #f3f4f6;
-  color: #4b5563;
-}
-.btn-cancel:hover {
-  background-color: #e5e7eb;
-}
-
-/* Form Styles */
-.admin-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-.form-input:focus {
-  outline: none;
-  border-color: #38b24a;
-  box-shadow: 0 0 0 1px #38b24a;
-}
-
-.form-group-inline {
-  display: flex;
-  gap: 1rem;
-}
-
-.form-checkbox-group label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-}
-
-.form-category-group p {
-  margin-bottom: 0.5rem;
-}
-
-.category-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.category-tag {
-  background-color: #f3f4f6;
-  padding: 0.4rem 0.8rem;
-  border-radius: 9999px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-.category-tag input[type="checkbox"] {
-  accent-color: #38b24a;
-}
-
-/* Generic messages */
-.loading-message, .error-message {
-  text-align: center;
-  font-size: 1.1rem;
-  padding: 2rem;
-  color: #6b7280;
-}
-.error-message {
-  color: #b91c1c;
-}
-
-/* ... (at the end of the file) */
-
-.admin-form-inline {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  width: 100%;
-}
-
-.admin-form-inline .form-input {
-  flex-grow: 1;
-}
-
-.admin-list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.admin-list-header h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-}
-/* Form Styles */
-.admin-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  /* --- Style additions below --- */
-  background-color: #f9fafb; /* Light grey background for the form */
-  padding: 1.5rem;          /* Add some internal spacing */
-  border: 1px solid #e5e7eb; /* A subtle border to define the form area */
-  border-radius: 8px;       /* Rounded corners to match the parent item */
-  margin: -1rem -1.5rem;      /* Negative margin to fill the parent's padding */
-}
-
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  background-color: lightgrey;
-}
-.admin-table th, .admin-table td {
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem 0.75rem;
-  text-align: left;
-}
-.admin-table th {
-  background-color: #f9fafb;
-  font-weight: 600;
-}
-.admin-table td button {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-}
-.admin-table td .btn-save, .admin-table td .btn-cancel {
-    font-size: 1rem;
-}
-.admin-table tfoot td {
-    background-color: #f9fafb;
-    padding-top: 1rem;
-    border-top: 2px solid #e5e7eb;
-}
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-.admin-table th, .admin-table td {
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem 0.75rem;
-  text-align: left;
-}
-.admin-table th {
-  background-color: #f9fafb;
-  font-weight: 600;
-}
-.admin-table td button {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-}
-.admin-table td .btn-save, .admin-table td .btn-cancel {
-    font-size: 1rem;
-}
-.admin-table tfoot td {
-    background-color: #f9fafb;
-    padding-top: 1rem;
-    border-top: 2px solid #e5e7eb;
 }
