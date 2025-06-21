@@ -5,5 +5,7 @@ const {
 } = require("../controllers/medicamentosController");
 
 router.get("/", getMedicamentosConCategorias);
+router.get("/:id", getMedicamentoById);
+
 
 module.exports = router;
