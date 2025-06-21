@@ -1,14 +1,22 @@
 import { Link } from "react-router-dom"
 import logo from '../assets/logofar.png'
-import { useState } from "react";
-import ModalLogin from "./ModalLogin";
+import { useState, useEffect } from "react";
+import Login from "./login";
 import { useBodyScrollLock } from "../hooks/Barra";
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [usuario, setUsuario] = useState(null);
 
   useBodyScrollLock(drawerOpen);
+
+  useEffect(() => {
+    const usuarioGuardado = localStorage.getItem("usuario");
+    if (usuarioGuardado) {
+      setUsuario(JSON.parse(usuarioGuardado));
+    }
+  }, []);
 
   return (
     <>
@@ -45,9 +53,15 @@ export default function Navbar() {
           </form>
         </div>
         <div className="navbar-list-right">
-          <Link to="#" className="navbar-link" onClick={() => setLoginOpen(true)}>
-            <i className="fas fa-user"></i> Iniciar sesión
-          </Link>
+          {usuario ? (
+            <span className="navbar-link">
+              <i className="fas fa-user"></i> {usuario.nombre}
+            </span>
+          ) : (
+            <Link to="#" className="navbar-link" onClick={() => setLoginOpen(true)}>
+              <i className="fas fa-user"></i> Iniciar sesión
+            </Link>
+          )}
           <Link to="/carrito" className="navbar-link">
             <i className="fas fa-shopping-cart"></i> Tu carrito
           </Link>
@@ -63,7 +77,7 @@ export default function Navbar() {
           {/* Agrega más enlaces aquí */}
         </ul>
       </aside>
-      <ModalLogin open={loginOpen} onClose={() => setLoginOpen(false)} />
+      <Login open={loginOpen} onClose={() => setLoginOpen(false)} />
     </>
   );
 }
