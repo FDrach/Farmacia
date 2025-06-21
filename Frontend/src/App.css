@@ -879,3 +879,57 @@ html, body {
   border-radius: 8px;       /* Rounded corners to match the parent item */
   margin: -1rem -1.5rem;      /* Negative margin to fill the parent's padding */
 }
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: lightgrey;
+}
+.admin-table th, .admin-table td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.admin-table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+.admin-table td button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+}
+.admin-table td .btn-save, .admin-table td .btn-cancel {
+    font-size: 1rem;
+}
+.admin-table tfoot td {
+    background-color: #f9fafb;
+    padding-top: 1rem;
+    border-top: 2px solid #e5e7eb;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.admin-table th, .admin-table td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.admin-table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+.admin-table td button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+}
+.admin-table td .btn-save, .admin-table td .btn-cancel {
+    font-size: 1rem;
+}
+.admin-table tfoot td {
+    background-color: #f9fafb;
+    padding-top: 1rem;
+    border-top: 2px solid #e5e7eb;
+}
