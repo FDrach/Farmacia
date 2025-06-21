@@ -8,15 +8,15 @@ export function useProductos() {
   useEffect(() => {
     setLoading(true);
     fetch("http://localhost:8080/api/medicamentos")
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error("Error HTTP: " + res.status);
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         setProductos(Array.isArray(data) ? data : data.productos || []);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setError("Error al cargar productos: " + err.message);
         setLoading(false);
       });

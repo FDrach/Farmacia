@@ -4,7 +4,7 @@ import useAuthStore from "../store/authStore";
 export default function Login({ open, onClose }) {
   const [nombreDeUsuario, setNombreDeUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
-  
+
   // Obtener estado y acciones del store de Zustand
   const { login, cargando, error } = useAuthStore();
 
@@ -21,7 +21,9 @@ export default function Login({ open, onClose }) {
   return (
     <div className="modal-backdrop">
       <div className="modal-login">
-        <button className="modal-close-btn" onClick={onClose}>×</button>
+        <button className="modal-close-btn" onClick={onClose}>
+          ×
+        </button>
         <h2>Iniciar sesión</h2>
         <form className="modal-login-form" onSubmit={handleSubmit}>
           <label>
@@ -45,7 +47,13 @@ export default function Login({ open, onClose }) {
             />
             {/* Mostrar mensaje de error del store */}
             {error && (
-              <div style={{ color: "red", marginTop: "0.3rem", fontSize: "0.95rem" }}>
+              <div
+                style={{
+                  color: "red",
+                  marginTop: "0.3rem",
+                  fontSize: "0.95rem",
+                }}
+              >
                 {error}
               </div>
             )}

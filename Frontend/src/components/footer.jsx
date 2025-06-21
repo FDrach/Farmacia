@@ -12,9 +12,15 @@ export default function Footer() {
       <div className="footer-col">
         <h3>CONTACTO</h3>
         <div className="footer-social">
-          <a href="#"><i className="fab fa-facebook-f icon facebook"></i></a>
-          <a href="#"><i className="fab fa-instagram icon instagram"></i></a>
-          <a href="#"><i className="fab fa-whatsapp icon whatsapp"></i></a>
+          <a href="#">
+            <i className="fab fa-facebook-f icon facebook"></i>
+          </a>
+          <a href="#">
+            <i className="fab fa-instagram icon instagram"></i>
+          </a>
+          <a href="#">
+            <i className="fab fa-whatsapp icon whatsapp"></i>
+          </a>
         </div>
       </div>
 
@@ -28,7 +34,6 @@ export default function Footer() {
           <button type="submit">ENVIAR</button>
         </form>
       </div> */}
-
     </footer>
-  )
+  );
 }

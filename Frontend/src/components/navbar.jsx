@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import logo from '../assets/logofar.png';
+import logo from "../assets/logofar.png";
 import { useState } from "react";
 import Login from "./login";
 import { useBodyScrollLock } from "../hooks/Barra";
-import useAuthStore from "../store/authStore"; 
+import useAuthStore from "../store/authStore";
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -55,7 +55,7 @@ export default function Navbar() {
         </div>
         <div className="navbar-list-right">
           {/* Admin Link */}
-          {usuario && usuario.tipo === 'Administrador' && (
+          {usuario && usuario.tipo === "Administrador" && (
             <Link to="/administrador" className="navbar-link">
               <i className="fas fa-cogs"></i>
               <span className="navbar-text">Administrar</span>
@@ -63,15 +63,33 @@ export default function Navbar() {
           )}
 
           {usuario ? (
-            <div className="navbar-link" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <div
+              className="navbar-link"
+              style={{ display: "flex", alignItems: "center", gap: "15px" }}
+            >
               <i className="fas fa-user"></i>
               <span className="navbar-text">{usuario.nombre}</span>
-              <button onClick={handleLogout} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>
+              <button
+                onClick={handleLogout}
+                style={{
+                  background: "#dc3545",
+                  color: "white",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                }}
+              >
                 Salir
               </button>
             </div>
           ) : (
-            <Link to="#" className="navbar-link" onClick={() => setLoginOpen(true)}>
+            <Link
+              to="#"
+              className="navbar-link"
+              onClick={() => setLoginOpen(true)}
+            >
               <i className="fas fa-user"></i>
               <span className="navbar-text">Iniciar sesión</span>
             </Link>
@@ -83,12 +101,28 @@ export default function Navbar() {
         </div>
       </nav>
       {/* ... (Drawer and Login Modal) ... */}
-      <div className={`drawer-backdrop${drawerOpen ? " open" : ""}`} onClick={() => setDrawerOpen(false)} />
+      <div
+        className={`drawer-backdrop${drawerOpen ? " open" : ""}`}
+        onClick={() => setDrawerOpen(false)}
+      />
       <aside className={`drawer${drawerOpen ? " open" : ""}`}>
-        <button className="drawer-close-btn" onClick={() => setDrawerOpen(false)}>×</button>
+        <button
+          className="drawer-close-btn"
+          onClick={() => setDrawerOpen(false)}
+        >
+          ×
+        </button>
         <ul className="drawer-list">
-          <li><Link to="/Ofertas"><i className="fas fa-tags"></i> Ofertas</Link></li>
-          <li><Link to="/Productos"><i className="fas fa-box"></i> Productos</Link></li>
+          <li>
+            <Link to="/Ofertas">
+              <i className="fas fa-tags"></i> Ofertas
+            </Link>
+          </li>
+          <li>
+            <Link to="/Productos">
+              <i className="fas fa-box"></i> Productos
+            </Link>
+          </li>
           {/* Agrega más enlaces aquí */}
         </ul>
       </aside>
