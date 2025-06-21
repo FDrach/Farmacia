@@ -7,6 +7,7 @@ const ventasRoutes = require("./routes/ventasRoutes");
 const usuariosRoutes = require("./routes/usuariosRoutes");
 const comprasRoutes = require("./routes/comprasRoutes");
 const authRoutes = require("./routes/authRoutes");
+const categoriasRoutes = require("./routes/categoriasRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -30,6 +31,7 @@ app.use("/api/medicamentos", medicamentosRoutes);
 app.use("/api/ventas", ventasRoutes);
 app.use("/api/usuarios", usuariosRoutes);
 app.use("/api/compras", comprasRoutes);
+app.use("/api/categorias", categoriasRoutes);
 app.use("/api", authRoutes);
 
 app.listen(PORT, () => {

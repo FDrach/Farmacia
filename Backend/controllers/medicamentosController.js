@@ -58,7 +58,104 @@ const getMedicamentoById = (req, res) => {
   });
 };
 
+const updateMedicamento = (req, res) => {
+  const { id } = req.params;
+  const {
+    Nombre,
+    precio,
+    Stock,
+    Venta_libre,
+    categorias: newCategoryIds,
+  } = req.body;
+
+  if (
+    !Nombre ||
+    precio === undefined ||
+    Stock === undefined ||
+    Venta_libre === undefined ||
+    !Array.isArray(newCategoryIds)
+  ) {
+    return res.status(400).json({ message: "Missing required fields." });
+  }
+
+  connection.beginTransaction((err) => {
+    if (err) {
+      console.error("Error starting transaction:", err);
+      return res.status(500).json({ message: "Server error." });
+    }
+
+    const medQuery =
+      "UPDATE Medicamentos SET Nombre = ?, precio = ?, Stock = ?, Venta_libre = ? WHERE id = ?";
+    connection.query(
+      medQuery,
+      [Nombre, precio, Stock, Venta_libre, id],
+      (medErr, medResults) => {
+        if (medErr) {
+          return connection.rollback(() => {
+            console.error("Error updating medication:", medErr);
+            res
+              .status(500)
+              .json({ message: "Error updating medication details." });
+          });
+        }
+
+        const deleteQuery =
+          "DELETE FROM Medicamento_Categoria WHERE id_Medicamento = ?";
+        connection.query(deleteQuery, [id], (delErr) => {
+          if (delErr) {
+            return connection.rollback(() => {
+              console.error("Error deleting old categories:", delErr);
+              res.status(500).json({ message: "Error updating categories." });
+            });
+          }
+
+          if (newCategoryIds.length > 0) {
+            const insertQuery =
+              "INSERT INTO Medicamento_Categoria (id_Medicamento, id_Categoria) VALUES ?";
+            const values = newCategoryIds.map((catId) => [id, catId]);
+
+            connection.query(insertQuery, [values], (insErr) => {
+              if (insErr) {
+                return connection.rollback(() => {
+                  console.error("Error inserting new categories:", insErr);
+                  res
+                    .status(500)
+                    .json({ message: "Error assigning new categories." });
+                });
+              }
+
+              connection.commit((commitErr) => {
+                if (commitErr) {
+                  return connection.rollback(() => {
+                    console.error("Error committing transaction:", commitErr);
+                    res.status(500).json({ message: "Error saving changes." });
+                  });
+                }
+                res
+                  .status(200)
+                  .json({ message: "Medicamento updated successfully." });
+              });
+            });
+          } else {
+            connection.commit((commitErr) => {
+              if (commitErr) {
+                return connection.rollback(() =>
+                  res.status(500).json({ message: "Error saving changes." })
+                );
+              }
+              res
+                .status(200)
+                .json({ message: "Medicamento updated successfully." });
+            });
+          }
+        });
+      }
+    );
+  });
+};
+
 module.exports = {
   getMedicamentosConCategorias,
   getMedicamentoById,
+  updateMedicamento,
 };
