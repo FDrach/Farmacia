@@ -690,6 +690,141 @@ html, body {
   cursor: not-allowed;
 }
 
+/* App.css - Estilos para el menú desplegable de usuario en el navbar */
+.navbar-user-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px #0002;
+  min-width: 200px;
+  z-index: 100;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navbar-user-menu-item {
+  padding: 0.7rem 1.2rem;
+  font-size: 1.1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.navbar-user-menu-item:hover {
+  background: #eafaf1;
+  color: #38b24a;
+}
+
+.navbar-user-menu-item-green {
+  color: #38b24a;
+  font-weight: bold;
+}
+
+.navbar-cart-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px #0002;
+  min-width: 260px;
+  z-index: 100;
+  padding: 0.5rem 0.5rem 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.navbar-cart-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #38b24a;
+}
+.navbar-cart-empty {
+  color: #888;
+  text-align: center;
+  padding: 1rem 0;
+}
+.navbar-cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.5rem 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.navbar-cart-item {
+  padding: 0.5rem 0.3rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.navbar-cart-btn {
+  background: #38b24a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+.navbar-cart-btn:hover {
+  background: #2e8c3a;
+}
+
+.drawer-categorias-list {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin: 0;
+}
+.drawer-categoria-item {
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.15s;
+}
+.drawer-categoria-item:hover {
+  color: #2e8c3a;
+  text-decoration: underline;
+}
+
+/* App.css */
+.drawer-categorias-link {
+  color: #222;
+  font-size: 1.1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+  background: none;
+  border: none;
+}
+.drawer-categorias-link:hover {
+  color: #38b24a;
+}
+
+.navbar-link-green {
+  color: #38b24a;
+  font-weight: bold;
+  cursor: pointer;
+}
 
 @media (max-width: 800px) {
   .navbar-link .navbar-text {
