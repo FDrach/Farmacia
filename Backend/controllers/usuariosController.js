@@ -155,10 +155,28 @@ const createUsuario = (req, res) => {
   });
 };
 
+const deleteUsuario = (req, res) => {
+  const { id } = req.params;
+  const query = "DELETE FROM Usuarios WHERE id = ?";
+  connection.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Error deleting user:", error);
+      return res.status(500).json({ message: "Error al eliminar el usuario." });
+    }
+    if (results.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: `Usuario con ID ${id} no encontrado.` });
+    }
+    res.status(200).json({ message: "Usuario eliminado exitosamente." });
+  });
+};
+
 module.exports = {
   getUsuarios,
   getUsuarioById,
   getUsuarioByDni,
   updateUsuario,
   createUsuario,
+  deleteUsuario,
 };

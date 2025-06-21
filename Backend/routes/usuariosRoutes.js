@@ -6,12 +6,17 @@ const {
   getUsuarioByDni,
   updateUsuario,
   createUsuario,
+  deleteUsuario,
 } = require("../controllers/usuariosController");
 
 router.get("/", getUsuarios);
 router.post("/create", createUsuario);
-router.get("/:id", getUsuarioById);
 router.get("/dni/:dni", getUsuarioByDni);
-router.put("/:id", updateUsuario);
+
+router
+  .route("/:id")
+  .get(getUsuarioById)
+  .put(updateUsuario)
+  .delete(deleteUsuario);
 
 module.exports = router;

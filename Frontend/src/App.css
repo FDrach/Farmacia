@@ -854,3 +854,28 @@ html, body {
 .admin-form-inline .form-input {
   flex-grow: 1;
 }
+
+.admin-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-list-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+/* Form Styles */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* --- Style additions below --- */
+  background-color: #f9fafb; /* Light grey background for the form */
+  padding: 1.5rem;          /* Add some internal spacing */
+  border: 1px solid #e5e7eb; /* A subtle border to define the form area */
+  border-radius: 8px;       /* Rounded corners to match the parent item */
+  margin: -1rem -1.5rem;      /* Negative margin to fill the parent's padding */
+}
