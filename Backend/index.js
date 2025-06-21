@@ -8,6 +8,8 @@ const usuariosRoutes = require("./routes/usuariosRoutes");
 const comprasRoutes = require("./routes/comprasRoutes");
 const authRoutes = require("./routes/authRoutes");
 const categoriasRoutes = require("./routes/categoriasRoutes");
+const obraSocialRoutes = require("./routes/obraSocialRoutes");
+const clientesRoutes = require("./routes/clientesRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -33,6 +35,8 @@ app.use("/api/usuarios", usuariosRoutes);
 app.use("/api/compras", comprasRoutes);
 app.use("/api/categorias", categoriasRoutes);
 app.use("/api", authRoutes);
+app.use("/api/obras-sociales", obraSocialRoutes);
+app.use("/api/clientes", clientesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
