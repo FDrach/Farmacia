@@ -30,16 +30,49 @@ export function useMedicamentosAdmin() {
     fetchData();
   }, [fetchData]);
 
-  const updateMedicamento = async (id, data) => {
+  const addMedicamento = async (data) => {
     try {
-      await axios.put(`${API_BASE_URL}/medicamentos/${id}`, data);
-
+      await axios.post(`${API_BASE_URL}/medicamentos/create`, data);
       await fetchData();
     } catch (err) {
-      console.error(`Error updating medicamento ${id}:`, err);
-      throw new Error("Error al actualizar el medicamento.");
+      console.error("Error creating medicamento:", err);
+      throw new Error(
+        err.response?.data?.message || "Error al crear el medicamento."
+      );
     }
   };
 
-  return { medicamentos, categorias, loading, error, updateMedicamento };
+  const updateMedicamento = async (id, data) => {
+    try {
+      await axios.put(`${API_BASE_URL}/medicamentos/${id}`, data);
+      await fetchData();
+    } catch (err) {
+      console.error(`Error updating medicamento ${id}:`, err);
+      throw new Error(
+        err.response?.data?.message || "Error al actualizar el medicamento."
+      );
+    }
+  };
+
+  const removeMedicamento = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/medicamentos/${id}`);
+      await fetchData();
+    } catch (err) {
+      console.error("Error deleting medicamento:", err);
+      throw new Error(
+        err.response?.data?.message || "Error al eliminar el medicamento."
+      );
+    }
+  };
+
+  return {
+    medicamentos,
+    categorias,
+    loading,
+    error,
+    addMedicamento,
+    updateMedicamento,
+    removeMedicamento,
+  };
 }

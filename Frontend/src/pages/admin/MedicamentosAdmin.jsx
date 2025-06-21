@@ -1,29 +1,73 @@
 import { useState } from "react";
 import { useMedicamentosAdmin } from "../../hooks/useMedicamentosAdmin";
+import "../../App.css";
 
 export default function MedicamentosAdmin() {
-  const { medicamentos, categorias, loading, error, updateMedicamento } =
-    useMedicamentosAdmin();
+  const {
+    medicamentos,
+    categorias,
+    loading,
+    error,
+    addMedicamento,
+    updateMedicamento,
+    removeMedicamento, // Added for completeness
+  } = useMedicamentosAdmin();
   const [editingId, setEditingId] = useState(null);
+  const [isAdding, setIsAdding] = useState(false);
 
   if (loading) return <p className="loading-message">Cargando...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
+  const handleSave = (data) => {
+    // We check if we are editing or adding
+    if (editingId) {
+      return updateMedicamento(editingId, data);
+    } else {
+      return addMedicamento(data);
+    }
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("¿Está seguro? Esta acción no se puede deshacer.")) {
+        removeMedicamento(id).catch(err => alert(err.message));
+    }
+  };
+
   return (
     <div className="admin-list-container">
+      <div className="admin-list-header">
+        <h3>Lista de Medicamentos</h3>
+        {!isAdding && (
+             <button className="btn btn-save" onClick={() => { setEditingId(null); setIsAdding(true); }}>
+                Añadir Medicamento
+            </button>
+        )}
+      </div>
+
+      {isAdding && (
+        <div className="admin-list-item">
+          <MedicamentoForm
+            allCategorias={categorias}
+            onSave={handleSave}
+            onCancel={() => setIsAdding(false)}
+          />
+        </div>
+      )}
+
       {medicamentos.map((med) => (
         <div key={med.id} className="admin-list-item">
           {editingId === med.id ? (
             <MedicamentoForm
               medicamento={med}
               allCategorias={categorias}
-              onSave={updateMedicamento}
+              onSave={handleSave}
               onCancel={() => setEditingId(null)}
             />
           ) : (
             <MedicamentoDisplay
               medicamento={med}
-              onEdit={() => setEditingId(med.id)}
+              onEdit={() => { setIsAdding(false); setEditingId(med.id); }}
+              onDelete={handleDelete}
             />
           )}
         </div>
@@ -32,7 +76,8 @@ export default function MedicamentosAdmin() {
   );
 }
 
-function MedicamentoDisplay({ medicamento, onEdit }) {
+// Display Component - Added onDelete prop
+function MedicamentoDisplay({ medicamento, onEdit, onDelete }) {
   return (
     <>
       <div className="item-main-info">
@@ -40,37 +85,37 @@ function MedicamentoDisplay({ medicamento, onEdit }) {
         <span className="item-price">${medicamento.precio}</span>
       </div>
       <div className="item-details">
-        <p>
-          <strong>Stock:</strong> {medicamento.Stock}
-        </p>
-        <p>
-          <strong>Venta Libre:</strong> {medicamento.Venta_libre ? "Sí" : "No"}
-        </p>
-        <p>
-          <strong>Categorías:</strong>{" "}
-          {medicamento.categorias.join(", ") || "Ninguna"}
-        </p>
+        <p><strong>Stock:</strong> {medicamento.Stock}</p>
+        <p><strong>Venta Libre:</strong> {medicamento.Venta_libre ? "Sí" : "No"}</p>
+        <p><strong>Categorías:</strong> {medicamento.categorias?.join(", ") || "Ninguna"}</p>
       </div>
       <div className="item-actions">
-        <button onClick={onEdit} className="btn btn-edit">
-          Editar
-        </button>
-        <button className="btn btn-delete">Eliminar</button>
+        <button onClick={onEdit} className="btn btn-edit">Editar</button>
+        <button onClick={() => onDelete(medicamento.id)} className="btn btn-delete">Eliminar</button>
       </div>
     </>
   );
 }
 
+// Form Component - Corrected state initialization
 function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
-  const [formData, setFormData] = useState({
-    ...medicamento,
-    categorias: medicamento.categorias
-      .map((catName) => {
-        const cat = allCategorias.find((c) => c.nombre === catName);
-        return cat ? cat.id : null;
-      })
-      .filter((id) => id !== null),
-  });
+    
+    // This is the corrected, robust way to initialize state
+    const getInitialCategoryIds = () => {
+        if (!medicamento || !medicamento.categorias) return [];
+        return medicamento.categorias.map(catName => {
+            const cat = allCategorias.find(c => c.nombre === catName);
+            return cat ? cat.id : null;
+        }).filter(id => id !== null);
+    };
+
+    const [formData, setFormData] = useState({
+        Nombre: medicamento?.Nombre || "",
+        precio: medicamento?.precio || "",
+        Stock: medicamento?.Stock || "",
+        Venta_libre: medicamento?.Venta_libre || false,
+        categorias: getInitialCategoryIds()
+    });
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -96,7 +141,7 @@ function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
       Venta_libre: formData.Venta_libre ? 1 : 0,
     };
     try {
-      await onSave(medicamento.id, dataToSubmit);
+      await onSave(dataToSubmit);
       onCancel();
     } catch (err) {
       alert(err.message);
@@ -105,12 +150,17 @@ function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
 
   return (
     <form onSubmit={handleSubmit} className="admin-form">
+      <h4 style={{ margin: "0 0 1rem 0", color: "#1f2937" }}>
+        {medicamento ? "Editando Medicamento" : "Nuevo Medicamento"}
+      </h4>
       <input
         type="text"
         name="Nombre"
         value={formData.Nombre}
         onChange={handleInputChange}
         className="form-input"
+        placeholder="Nombre del Medicamento"
+        required
       />
       <div className="form-group-inline">
         <input
@@ -120,6 +170,8 @@ function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
           onChange={handleInputChange}
           className="form-input"
           placeholder="Precio"
+          step="0.01"
+          required
         />
         <input
           type="number"
@@ -128,6 +180,7 @@ function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
           onChange={handleInputChange}
           className="form-input"
           placeholder="Stock"
+          required
         />
       </div>
       <div className="form-checkbox-group">

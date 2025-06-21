@@ -154,8 +154,126 @@ const updateMedicamento = (req, res) => {
   });
 };
 
+const createMedicamento = (req, res) => {
+  const {
+    Nombre,
+    precio,
+    Stock,
+    Venta_libre,
+    categorias: categoryIds,
+  } = req.body;
+
+  if (
+    !Nombre ||
+    precio === undefined ||
+    Stock === undefined ||
+    Venta_libre === undefined ||
+    !Array.isArray(categoryIds)
+  ) {
+    return res
+      .status(400)
+      .json({ message: "Todos los campos son requeridos." });
+  }
+
+  connection.beginTransaction((err) => {
+    if (err) {
+      console.error("Error starting transaction:", err);
+      return res.status(500).json({ message: "Error en el servidor." });
+    }
+
+    const medQuery =
+      "INSERT INTO Medicamentos (Nombre, precio, Stock, Venta_libre) VALUES (?, ?, ?, ?)";
+    connection.query(
+      medQuery,
+      [Nombre, precio, Stock, Venta_libre],
+      (medErr, medResults) => {
+        if (medErr) {
+          return connection.rollback(() => {
+            console.error("Error creating medication:", medErr);
+            res.status(500).json({ message: "Error al crear el medicamento." });
+          });
+        }
+
+        const newMedicamentoId = medResults.insertId;
+
+        if (categoryIds.length > 0) {
+          const insertQuery =
+            "INSERT INTO Medicamento_Categoria (id_Medicamento, id_Categoria) VALUES ?";
+          const values = categoryIds.map((catId) => [newMedicamentoId, catId]);
+
+          connection.query(insertQuery, [values], (insErr) => {
+            if (insErr) {
+              return connection.rollback(() => {
+                console.error("Error inserting categories:", insErr);
+                res
+                  .status(500)
+                  .json({ message: "Error al asignar categorías." });
+              });
+            }
+
+            connection.commit((commitErr) => {
+              if (commitErr) {
+                return connection.rollback(() =>
+                  res.status(500).json({ message: "Error al guardar." })
+                );
+              }
+              res.status(201).json({
+                message: "Medicamento creado exitosamente.",
+                id: newMedicamentoId,
+              });
+            });
+          });
+        } else {
+          connection.commit((commitErr) => {
+            if (commitErr) {
+              return connection.rollback(() =>
+                res.status(500).json({ message: "Error al guardar." })
+              );
+            }
+            res.status(201).json({
+              message: "Medicamento creado exitosamente.",
+              id: newMedicamentoId,
+            });
+          });
+        }
+      }
+    );
+  });
+};
+
+const deleteMedicamento = (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: "ID de medicamento es requerido." });
+  }
+
+  const query = "DELETE FROM Medicamentos WHERE id = ?";
+
+  connection.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Error deleting medication:", error);
+      return res
+        .status(500)
+        .json({
+          message:
+            "Error al eliminar el medicamento. Puede que esté asociado a ventas existentes.",
+        });
+    }
+
+    if (results.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: `Medicamento con ID ${id} no encontrado.` });
+    }
+
+    res.status(200).json({ message: "Medicamento eliminado exitosamente." });
+  });
+};
+
 module.exports = {
   getMedicamentosConCategorias,
   getMedicamentoById,
   updateMedicamento,
+  createMedicamento,
+  deleteMedicamento,
 };
