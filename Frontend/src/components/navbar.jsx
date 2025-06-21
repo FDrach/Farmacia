@@ -55,15 +55,18 @@ export default function Navbar() {
         <div className="navbar-list-right">
           {usuario ? (
             <span className="navbar-link">
-              <i className="fas fa-user"></i> {usuario.nombre}
+              <i className="fas fa-user"></i>
+              <span className="navbar-text">{usuario.nombre}</span>
             </span>
           ) : (
             <Link to="#" className="navbar-link" onClick={() => setLoginOpen(true)}>
-              <i className="fas fa-user"></i> Iniciar sesión
+              <i className="fas fa-user"></i>
+              <span className="navbar-text">Iniciar sesión</span>
             </Link>
           )}
           <Link to="/carrito" className="navbar-link">
-            <i className="fas fa-shopping-cart"></i> Tu carrito
+            <i className="fas fa-shopping-cart"></i>
+            <span className="navbar-text">Tu carrito</span>
           </Link>
         </div>
       </nav>

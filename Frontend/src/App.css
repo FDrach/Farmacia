@@ -603,3 +603,10 @@ html, body {
 .producto-btn:hover {
   background: #2e8c3a;
 }
+
+/* Oculta el texto de usuario y carrito en navbar en pantallas pequeñas */
+@media (max-width: 800px) {
+  .navbar-link .navbar-text {
+    display: none;
+  }
+}
