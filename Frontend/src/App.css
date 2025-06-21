@@ -841,3 +841,16 @@ html, body {
 .error-message {
   color: #b91c1c;
 }
+
+/* ... (at the end of the file) */
+
+.admin-form-inline {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
+.admin-form-inline .form-input {
+  flex-grow: 1;
+}
