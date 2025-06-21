@@ -1,22 +1,22 @@
-import { Link } from "react-router-dom"
-import logo from '../assets/logofar.png'
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import logo from '../assets/logofar.png';
+import { useState } from "react";
 import Login from "./login";
 import { useBodyScrollLock } from "../hooks/Barra";
+import useAuthStore from "../store/authStore"; 
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [usuario, setUsuario] = useState(null);
+
+  // Obtener usuario y acciones del store
+  const { usuario, logout } = useAuthStore();
 
   useBodyScrollLock(drawerOpen);
 
-  useEffect(() => {
-    const usuarioGuardado = localStorage.getItem("usuario");
-    if (usuarioGuardado) {
-      setUsuario(JSON.parse(usuarioGuardado));
-    }
-  }, []);
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function Navbar() {
           <Link to="/">
             <img
               src={logo}
-              alt="Farmacia Logo"
+              alt="Logo de Farmacia"
               className="navbar-logo"
               style={{ height: "48px", marginRight: "1rem" }}
             />
@@ -54,10 +54,13 @@ export default function Navbar() {
         </div>
         <div className="navbar-list-right">
           {usuario ? (
-            <span className="navbar-link">
+            <div className="navbar-link">
               <i className="fas fa-user"></i>
               <span className="navbar-text">{usuario.nombre}</span>
-            </span>
+              <button onClick={handleLogout}>
+                Salir
+              </button>
+            </div>
           ) : (
             <Link to="#" className="navbar-link" onClick={() => setLoginOpen(true)}>
               <i className="fas fa-user"></i>
@@ -73,7 +76,7 @@ export default function Navbar() {
       {/* Drawer lateral */}
       <div className={`drawer-backdrop${drawerOpen ? " open" : ""}`} onClick={() => setDrawerOpen(false)} />
       <aside className={`drawer${drawerOpen ? " open" : ""}`}>
-        <button className="drawer-close-btn" onClick={() => setDrawerOpen(false)}>&times;</button>
+        <button className="drawer-close-btn" onClick={() => setDrawerOpen(false)}>×</button>
         <ul className="drawer-list">
           <li><Link to="/Ofertas"><i className="fas fa-tags"></i> Ofertas</Link></li>
           <li><Link to="/Productos"><i className="fas fa-box"></i> Productos</Link></li>

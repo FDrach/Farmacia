@@ -1,49 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import useAuthStore from "../store/authStore";
 
 export default function Login({ open, onClose }) {
-  const [usuario, setUsuario] = useState("");
+  const [nombreDeUsuario, setNombreDeUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  
+  // Obtener estado y acciones del store de Zustand
+  const { login, cargando, error } = useAuthStore();
 
   if (!open) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      const res = await fetch("http://localhost:8080/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ usuario, contrasena }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Error al iniciar sesión");
-      } else {
-        // Guarda el usuario en localStorage
-        localStorage.setItem("usuario", JSON.stringify(data.usuario));
-        onClose();
-      }
-    } catch (err) {
-      setError("Error de conexión");
+    const success = await login(nombreDeUsuario, contrasena);
+    if (success) {
+      onClose();
     }
-    setLoading(false);
   };
 
   return (
     <div className="modal-backdrop">
       <div className="modal-login">
-        <button className="modal-close-btn" onClick={onClose}>&times;</button>
+        <button className="modal-close-btn" onClick={onClose}>×</button>
         <h2>Iniciar sesión</h2>
         <form className="modal-login-form" onSubmit={handleSubmit}>
           <label>
             Usuario o correo
             <input
               type="text"
-              value={usuario}
-              onChange={e => setUsuario(e.target.value)}
+              value={nombreDeUsuario}
+              onChange={(e) => setNombreDeUsuario(e.target.value)}
               placeholder="Ingresa tu usuario"
               required
             />
@@ -53,19 +39,19 @@ export default function Login({ open, onClose }) {
             <input
               type="password"
               value={contrasena}
-              onChange={e => setContrasena(e.target.value)}
+              onChange={(e) => setContrasena(e.target.value)}
               placeholder="Contraseña"
               required
             />
-            {/* Mensaje de error debajo del input de contraseña */}
+            {/* Mostrar mensaje de error del store */}
             {error && (
               <div style={{ color: "red", marginTop: "0.3rem", fontSize: "0.95rem" }}>
                 {error}
               </div>
             )}
           </label>
-          <button type="submit" className="modal-login-btn" disabled={loading}>
-            {loading ? "Ingresando..." : "Entrar"}
+          <button type="submit" className="modal-login-btn" disabled={cargando}>
+            {cargando ? "Ingresando..." : "Entrar"}
           </button>
         </form>
       </div>
