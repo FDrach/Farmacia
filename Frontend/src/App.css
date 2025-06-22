@@ -1,6 +1,53 @@
+/* ==========================================================================
+   0. IMPORTS & GLOBAL STYLES
+   ========================================================================== */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css");
 
+/* General */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #fff;
+  color: #222;
+}
+
+/* Full height layout setup */
+html,
+body,
+#root {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Flex layout for sticky footer */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1; /* Pushes footer down */
+}
+
+/* Generic card and text styles */
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Default logo animation styles */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -23,62 +70,17 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+/* ==========================================================================
+      1. LAYOUT COMPONENTS (HEADER, FOOTER)
+      ========================================================================== */
 
-/* General */
-body {
-  margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #fff;
-  color: #222;
-}
-
-/* Haz que el body y el root ocupen toda la altura */
-html,
-body,
-#root {
-  height: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* Evita el desbordamiento horizontal */
-html,
-body {
-  overflow-x: hidden;
-}
-
-/* Haz que el contenedor principal use flex y crezca */
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* El contenido principal debe crecer y empujar el footer hacia abajo */
-.main-content {
-  flex: 1;
-}
-
-/* Tarjetas y textos de ayuda */
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-/* Navbar principal (puedes mover esto a navbar.css si prefieres) */
+/* --------------------------------------------------------------------------
+      1.1. Navbar
+   -------------------------------------------------------------------------- */
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: center; /* Centra todos los elementos hijos horizontalmente */
+  justify-content: center;
   padding: 0 2rem;
   background: #181818;
   height: 70px;
@@ -101,25 +103,16 @@ body {
 }
 
 .navbar-list-center {
-  flex: 0 1 520px; /* No crece, ancho máximo de la barra de búsqueda */
+  flex: 1;
   display: flex;
   justify-content: center;
 }
 
 .navbar-list-right {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  justify-content: flex-end;
-  flex: 0 1 auto;
-}
-
-.navbar-list-right,
-.navbar-list-center {
-  flex: 1;
-}
-
-.navbar-list-right {
   justify-content: flex-end;
 }
 
@@ -133,36 +126,31 @@ body {
   gap: 0.4rem;
   transition: color 0.2s;
 }
-
 .navbar-link:hover {
   color: #3f83e9;
 }
-
 .navbar-link i {
   font-size: 1.2rem;
 }
 
-/* Estilo para el buscador en el navbar */
+/* Navbar Search Bar */
 .navbar-search {
   display: flex;
   align-items: stretch;
-  margin: 0 auto;
   flex: none;
-  max-width: 420px; /* Más angosto */
+  max-width: 420px;
   width: 100%;
   background: #fff;
-  border-radius: 12px; /* Menos redondeado */
-  border: 2px solid #38b24a; /* Verde */
+  border-radius: 12px;
+  border: 2px solid #38b24a;
   overflow: hidden;
-  padding: 0;
-  height: 44px; /* Más bajo */
+  height: 44px;
   box-sizing: border-box;
   position: relative;
   transition: border-color 0.2s;
 }
-
 .navbar-search:focus-within {
-  border-color: #38b24a !important; /* Verde al enfocar */
+  border-color: #38b24a !important;
 }
 
 .navbar-search-input {
@@ -172,11 +160,9 @@ body {
   font-size: 1rem;
   flex: 1;
   background: transparent;
-  border-radius: 0;
-  height: 100%;
   color: #222;
+  height: 100%;
 }
-
 .navbar-search-input::placeholder {
   color: #888;
   font-size: 1rem;
@@ -197,61 +183,59 @@ body {
   height: 100%;
   border-radius: 0 10px 10px 0;
 }
-
 .navbar-search-btn:hover {
   background: #649b30;
   color: #ffffff;
 }
 
+/* --------------------------------------------------------------------------
+      1.2. Footer
+   -------------------------------------------------------------------------- */
 .footer {
   background: #000000;
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 2rem; /* Menos espacio entre columnas */
-  padding: 1.5rem 1rem; /* Menos padding */
+  gap: 2rem;
+  padding: 1.5rem 1rem;
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
 .footer-col {
   flex: 1;
-  min-width: 160px; /* Más angosto */
+  min-width: 160px;
 }
-
 .footer-col h3 {
   margin-bottom: 0.7rem;
-  font-size: 1.1rem; /* Más chico */
+  font-size: 1.1rem;
   font-weight: bold;
   letter-spacing: 1px;
 }
-
 .footer-col ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .footer-col ul li {
-  margin-bottom: 0.6rem; /* Menos espacio entre items */
-  font-size: 1rem; /* Más chico */
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: color 0.2s;
 }
 
+/* Footer Social Icons */
 .footer-social {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
-
-.icon {
-  font-size: 1.3rem; /* Más chico */
-  width: 32px;
-  height: 32px;
+.footer-social a {
+  text-decoration: none !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
 }
-
 .footer-social .icon {
   display: flex;
   align-items: center;
@@ -261,125 +245,48 @@ body {
   height: 32px;
   border-radius: 50%;
   color: #fff;
-  margin-bottom: 0.3rem;
-  /* Elimina padding/margin internos si los hay */
-  box-sizing: border-box;
-  text-decoration: none !important;
-  box-shadow: none !important;
-  border-bottom: none !important;
 }
-
-.footer-social a {
-  text-decoration: none !important;
-  box-shadow: none !important;
-  border-bottom: none !important;
-}
-
 .footer-social .facebook {
   background: #3b5998;
 }
-
 .footer-social .instagram {
   background: #e1306c;
 }
-
 .footer-social .whatsapp {
   background: #25d366;
 }
 
+/* Footer Contact Form */
 .footer-form h3 {
   margin-bottom: 0.5rem;
 }
-
 .footer-form form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Menos espacio entre campos */
+  gap: 0.5rem;
 }
-
 .footer-form input,
 .footer-form textarea {
-  padding: 0.4rem; /* Menos padding */
-  font-size: 1rem; /* Más chico */
+  padding: 0.4rem;
+  font-size: 1rem;
   margin-bottom: 0.2rem;
 }
-
 .footer-form textarea {
-  min-height: 60px; /* Más bajo */
+  min-height: 60px;
 }
-
 .footer-form button {
-  padding: 0.4rem 1.2rem; /* Botón más pequeño */
+  padding: 0.4rem 1.2rem;
   font-size: 1rem;
   margin-top: 0.2rem;
 }
 
-/* Carrusel personalizado */
-.custom-carousel-container {
-  padding: 0;
-  margin: 2rem auto;
-  display: block;
-  max-width: 95vw;
-  width: 100%;
-  background: #f3f3f3;
-  border-radius: 32px;
-  box-sizing: border-box;
-  box-shadow: none;
-  overflow: hidden;
-}
+/* ==========================================================================
+      2. UI COMPONENTS
+      ========================================================================== */
 
-.carousel-slide {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-  background: none;
-}
-
-.carousel-img {
-  border-radius: 0;
-  box-shadow: none;
-  max-width: 100%;
-  max-height: 350px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  background: none;
-  margin: 0 auto;
-  display: block;
-}
-
-/* Dots personalizados para el carrusel */
-.slick-dots {
-  position: absolute;
-  bottom: 16px;
-  left: 0;
-  width: 100%;
-  display: flex !important;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  z-index: 2;
-}
-
-.slick-dots li {
-  margin: 0 6px;
-}
-
-.slick-dots li button:before {
-  font-size: 16px;
-  color: #384278;
-  opacity: 0.5;
-  transition: color 0.2s, opacity 0.2s;
-}
-
-.slick-dots li.slick-active button:before {
-  color: #3f83e9;
-  opacity: 1;
-}
-
-/* Botón menú hamburguesa */
+/* --------------------------------------------------------------------------
+      2.1. Drawer (Side Menu)
+   -------------------------------------------------------------------------- */
 .drawer-menu-btn {
   background: none;
   border: none;
@@ -398,11 +305,10 @@ body {
   border-radius: 2px;
 }
 
-/* Drawer lateral */
 .drawer {
   position: fixed;
   top: 0;
-  left: -320px; /* Oculto completamente fuera de pantalla */
+  left: -320px;
   width: 270px;
   height: 100vh;
   background: #fff;
@@ -414,8 +320,9 @@ body {
   flex-direction: column;
 }
 .drawer.open {
-  left: 0; /* Se muestra */
+  left: 0;
 }
+
 .drawer-close-btn {
   background: none;
   border: none;
@@ -425,6 +332,7 @@ body {
   cursor: pointer;
   margin-bottom: 1rem;
 }
+
 .drawer-list {
   list-style: none;
   padding: 0;
@@ -433,7 +341,8 @@ body {
 .drawer-list li {
   margin-bottom: 1.2rem;
 }
-.drawer-list a {
+.drawer-list a,
+.drawer-categorias-link {
   color: #222;
   font-size: 1.1rem;
   text-decoration: none;
@@ -442,11 +351,38 @@ body {
   gap: 0.7rem;
   transition: color 0.2s;
 }
-.drawer-list a:hover {
+.drawer-list a:hover,
+.drawer-categorias-link:hover {
   color: #38b24a;
 }
+.drawer-categorias-link {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  border: none;
+}
 
-/* Fondo oscuro al abrir el drawer */
+.drawer-categorias-list {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin: 0;
+}
+.drawer-categoria-item {
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.15s;
+}
+.drawer-categoria-item:hover {
+  color: #2e8c3a;
+  text-decoration: underline;
+}
+
 .drawer-backdrop {
   position: fixed;
   top: 0;
@@ -464,14 +400,9 @@ body {
   pointer-events: all;
 }
 
-/* Centrar la barra de búsqueda */
-.navbar-list-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-/* Estilos para el modal de login */
+/* --------------------------------------------------------------------------
+      2.2. Modals
+   -------------------------------------------------------------------------- */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -485,6 +416,7 @@ body {
   z-index: 3000;
 }
 
+/* Login Modal */
 .modal-login {
   background: #fff;
   border-radius: 12px;
@@ -516,7 +448,6 @@ body {
   width: 100%;
   margin-top: 1rem;
 }
-
 .modal-login-form label {
   font-weight: 500;
   color: #222;
@@ -524,14 +455,12 @@ body {
   flex-direction: column;
   gap: 0.3rem;
 }
-
 .modal-login-form input {
   padding: 0.6rem 0.8rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
 }
-
 .modal-login-btn {
   background: #38b24a;
   color: #fff;
@@ -544,177 +473,39 @@ body {
   margin-top: 0.5rem;
   transition: background 0.2s;
 }
-
 .modal-login-btn:hover {
   background: #2e8c3a;
 }
 
-/* Tarjeta de producto */
-.productos-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.producto-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px #0001;
-  width: 220px;
-  padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.producto-img-placeholder {
-  width: 100%;
-  height: 120px;
-  background: #f7f7f7;
+/* Generic Modal Content (from end of original file) */
+.modal-content {
+  background-color: lightgray;
   border-radius: 12px;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 3rem;
+  border: 1px solid;
 }
 
-.producto-nombre {
-  font-size: 1.1rem;
-  margin: 0.5rem 0;
-}
-
-.producto-categorias {
-  color: #888;
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-}
-
-.producto-precio {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #38b24a;
-}
-
-.producto-btn {
-  margin-top: 1rem;
-  background: #38b24a;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1.2rem;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-
-.producto-btn:hover {
-  background: #2e8c3a;
-}
-
-/* Carrusel de Categorías */
-.carrusel-categorias-container {
-  position: relative;
-  margin: 2rem 0;
-}
-
-.carrusel-categorias-titulo {
-  text-align: center;
-  font-weight: bold;
-  font-size: 2.2rem;
-  margin-bottom: 1.2rem;
-  letter-spacing: 1px;
-}
-
-.carrusel-categorias-flex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.carrusel-categorias-lista {
-  display: flex;
-  gap: 1.5rem;
-  overflow: hidden;
-  width: 1100px;
-  max-width: 95vw;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-}
-
-.carrusel-categorias-card {
-  min-width: 200px;
-  max-width: 220px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 18px #0002;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  overflow: hidden;
-  position: relative;
-  height: 240px; /* Fija la altura total de la card */
-}
-
-.carrusel-categorias-img {
-  width: 100%;
-  height: 120px; /* Fija la altura de la imagen */
-  background: #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carrusel-categorias-nombre {
-  width: 100%;
-  min-height: 60px; /* Fija la altura del área de texto */
-  padding: 1rem 0.5rem 0.5rem 0.5rem;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: #444;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  word-break: break-word;
-}
-
-.carrusel-categorias-btn {
-  font-size: 2rem;
-  background: #fff;
-  border: none;
-  cursor: pointer;
-  color: #38b24a;
-  padding: 0 12px;
-  transition: color 0.2s;
-}
-
-.carrusel-categorias-btn:disabled {
-  color: #ccc;
-  cursor: not-allowed;
-}
-
-/* App.css - Estilos para el menú desplegable de usuario en el navbar */
-.navbar-user-menu {
+/* --------------------------------------------------------------------------
+      2.3. Navbar Dropdown Menus (User & Cart)
+   -------------------------------------------------------------------------- */
+.navbar-user-menu,
+.navbar-cart-menu {
   position: absolute;
   top: 120%;
   right: 0;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 18px #0002;
-  min-width: 200px;
   z-index: 100;
-  padding: 0.5rem 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+.navbar-user-menu {
+  min-width: 200px;
+  padding: 0.5rem 0;
+}
 .navbar-user-menu-item {
   padding: 0.7rem 1.2rem;
   font-size: 1.1rem;
@@ -725,30 +516,23 @@ body {
   cursor: pointer;
   transition: background 0.15s;
 }
-
 .navbar-user-menu-item:hover {
   background: #eafaf1;
   color: #38b24a;
 }
-
 .navbar-user-menu-item-green {
   color: #38b24a;
   font-weight: bold;
 }
+.navbar-link-green {
+  color: #38b24a;
+  font-weight: bold;
+  cursor: pointer;
+}
 
 .navbar-cart-menu {
-  position: absolute;
-  top: 120%;
-  right: 0;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 18px #0002;
   min-width: 260px;
-  z-index: 100;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 .navbar-cart-title {
   font-weight: bold;
@@ -790,67 +574,208 @@ body {
   background: #2e8c3a;
 }
 
-.drawer-categorias-list {
-  list-style: none;
-  padding-left: 1.5rem;
-  margin: 0;
-}
-.drawer-categoria-item {
-  background: none;
-  border: none;
-  text-align: left;
-  font-size: 1rem;
-  padding: 0.3rem 0;
-  cursor: pointer;
+/* --------------------------------------------------------------------------
+      2.4. Carousels
+   -------------------------------------------------------------------------- */
+
+/* Main Image Carousel */
+.custom-carousel-container {
+  padding: 0;
+  margin: 2rem auto;
+  max-width: 95vw;
   width: 100%;
-  transition: color 0.15s;
+  background: #f3f3f3;
+  border-radius: 32px;
+  overflow: hidden;
 }
-.drawer-categoria-item:hover {
-  color: #2e8c3a;
-  text-decoration: underline;
+.carousel-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  background: none;
+}
+.carousel-img {
+  max-width: 100%;
+  max-height: 350px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
 }
 
-/* App.css */
-.drawer-categorias-link {
-  color: #222;
-  font-size: 1.1rem;
-  text-decoration: none;
+/* Slick Carousel Dot Overrides */
+.slick-dots {
+  position: absolute;
+  bottom: 16px;
+  width: 100%;
+  display: flex !important;
+  justify-content: center;
+  list-style: none;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+}
+.slick-dots li {
+  margin: 0 6px;
+}
+.slick-dots li button:before {
+  font-size: 16px;
+  color: #384278;
+  opacity: 0.5;
+  transition: color 0.2s, opacity 0.2s;
+}
+.slick-dots li.slick-active button:before {
+  color: #3f83e9;
+  opacity: 1;
+}
+
+/* Categories Carousel */
+.carrusel-categorias-container {
+  position: relative;
+  margin: 2rem 0;
+}
+.carrusel-categorias-titulo {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+.carrusel-categorias-flex {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  justify-content: center;
+  gap: 1rem;
+}
+.carrusel-categorias-lista {
+  display: flex;
+  gap: 1.5rem;
+  overflow: hidden;
+  width: 1100px;
+  max-width: 95vw;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.carrusel-categorias-card {
+  min-width: 200px;
+  max-width: 220px;
+  height: 240px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px #0002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  position: relative;
+}
+.carrusel-categorias-img {
+  width: 100%;
+  height: 120px;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carrusel-categorias-nombre {
+  width: 100%;
+  min-height: 60px;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  text-align: center;
   font-weight: bold;
-  cursor: pointer;
-  transition: color 0.2s;
-  padding: 0;
-  background: none;
+  font-size: 1.1rem;
+  color: #444;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  word-break: break-word;
+}
+.carrusel-categorias-btn {
+  font-size: 2rem;
+  background: #fff;
   border: none;
-}
-.drawer-categorias-link:hover {
-  color: #38b24a;
-}
-
-.navbar-link-green {
-  color: #38b24a;
-  font-weight: bold;
   cursor: pointer;
+  color: #38b24a;
+  padding: 0 12px;
+  transition: color 0.2s;
+}
+.carrusel-categorias-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
 }
 
-@media (max-width: 800px) {
-  .navbar-link .navbar-text {
-    display: none;
-  }
+/* --------------------------------------------------------------------------
+      2.5. Product Cards
+   -------------------------------------------------------------------------- */
+.productos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
 }
 
-/* Oculta el texto de usuario y carrito en navbar en pantallas pequeñas */
-@media (max-width: 800px) {
-  .navbar-link .navbar-text {
-    display: none;
-  }
+.producto-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0001;
+  width: 220px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+.producto-img-placeholder {
+  width: 100%;
+  height: 120px;
+  background: #f7f7f7;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.producto-nombre {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+.producto-categorias {
+  color: #888;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+.producto-precio {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #38b24a;
+}
+.producto-btn {
+  margin-top: 1rem;
+  background: #38b24a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.producto-btn:hover {
+  background: #2e8c3a;
+}
+
 /* ==========================================================================
-   Admin Page Styles
-   ========================================================================== */
+      3. ADMIN PAGE STYLES
+      ========================================================================== */
 
+/* --------------------------------------------------------------------------
+      3.1. Admin Layout
+   -------------------------------------------------------------------------- */
 .admin-container {
   max-width: 1200px;
   margin: 2rem auto;
@@ -876,7 +801,6 @@ body {
   border-bottom: 1px solid #ddd;
   padding-bottom: 1rem;
 }
-
 .admin-nav-link {
   padding: 0.5rem 1rem;
   text-decoration: none;
@@ -885,12 +809,10 @@ body {
   border-radius: 6px;
   transition: background-color 0.2s, color 0.2s;
 }
-
 .admin-nav-link:hover {
   background-color: #e9e9e9;
   color: #111;
 }
-
 .admin-nav-link.active {
   background-color: #38b24a;
   color: #fff;
@@ -903,7 +825,6 @@ body {
   border: 1px solid #eee;
   min-height: 300px;
 }
-
 .admin-welcome {
   text-align: center;
   font-size: 1.2rem;
@@ -911,14 +832,26 @@ body {
   padding: 3rem 0;
 }
 
-/* ==========================================================================
-   Reusable Admin List & Form Styles
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+      3.2. Reusable Admin Components (Lists, Forms, Buttons)
+   -------------------------------------------------------------------------- */
 
+/* List Styles */
 .admin-list-container {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+.admin-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.admin-list-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
 }
 
 .admin-list-item {
@@ -929,7 +862,6 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: box-shadow 0.2s;
 }
-
 .admin-list-item:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
@@ -940,29 +872,24 @@ body {
   align-items: center;
   margin-bottom: 0.75rem;
 }
-
 .item-title {
   font-size: 1.2rem;
   font-weight: 600;
   color: #1f2937;
 }
-
 .item-price {
   font-size: 1.1rem;
   font-weight: 600;
   color: #38b24a;
 }
-
 .item-details p {
   margin: 0.25rem 0;
   color: #6b7280;
   font-size: 0.95rem;
 }
-
 .item-details strong {
   color: #374151;
 }
-
 .item-actions {
   display: flex;
   gap: 0.5rem;
@@ -971,52 +898,25 @@ body {
   padding-top: 1rem;
 }
 
-.btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.btn-edit {
-  background-color: #e5e7eb;
-  color: #374151;
-}
-.btn-edit:hover {
-  background-color: #d1d5db;
-}
-
-.btn-delete {
-  background-color: #fee2e2;
-  color: #b91c1c;
-}
-.btn-delete:hover {
-  background-color: #fecaca;
-}
-
-.btn-save {
-  background-color: #38b24a;
-  color: #fff;
-}
-.btn-save:hover {
-  background-color: #2e8c3a;
-}
-
-.btn-cancel {
-  background-color: #f3f4f6;
-  color: #4b5563;
-}
-.btn-cancel:hover {
-  background-color: #e5e7eb;
-}
-
 /* Form Styles */
 .admin-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin: -1rem -1.5rem;
+}
+.admin-form-inline {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+.admin-form-inline .form-input {
+  flex-grow: 1;
 }
 
 .form-input {
@@ -1025,6 +925,7 @@ body {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 .form-input:focus {
   outline: none;
@@ -1036,39 +937,70 @@ body {
   display: flex;
   gap: 1rem;
 }
-
-.form-checkbox-group label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-}
-
 .form-category-group p {
   margin-bottom: 0.5rem;
 }
-
 .category-options {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
-
+.form-checkbox-group label,
+.category-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
 .category-tag {
   background-color: #f3f4f6;
   padding: 0.4rem 0.8rem;
   border-radius: 9999px;
   font-size: 0.9rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
 }
 .category-tag input[type="checkbox"] {
   accent-color: #38b24a;
 }
 
-/* Generic messages */
+/* Button Styles */
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.btn-edit {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+.btn-edit:hover {
+  background-color: #d1d5db;
+}
+.btn-delete {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+.btn-delete:hover {
+  background-color: #fecaca;
+}
+.btn-save {
+  background-color: #38b24a;
+  color: #fff;
+}
+.btn-save:hover {
+  background-color: #2e8c3a;
+}
+.btn-cancel {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+.btn-cancel:hover {
+  background-color: #e5e7eb;
+}
+
+/* Generic Messages */
 .loading-message,
 .error-message {
   text-align: center;
@@ -1080,44 +1012,9 @@ body {
   color: #b91c1c;
 }
 
-/* ... (at the end of the file) */
-
-.admin-form-inline {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  width: 100%;
-}
-
-.admin-form-inline .form-input {
-  flex-grow: 1;
-}
-
-.admin-list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.admin-list-header h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-}
-/* Form Styles */
-.admin-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  /* --- Style additions below --- */
-  background-color: #f9fafb; /* Light grey background for the form */
-  padding: 1.5rem; /* Add some internal spacing */
-  border: 1px solid #e5e7eb; /* A subtle border to define the form area */
-  border-radius: 8px; /* Rounded corners to match the parent item */
-  margin: -1rem -1.5rem; /* Negative margin to fill the parent's padding */
-}
-
+/* --------------------------------------------------------------------------
+      3.3. Admin Table
+   -------------------------------------------------------------------------- */
 .admin-table {
   width: 100%;
   border-collapse: collapse;
@@ -1131,34 +1028,7 @@ body {
   border: 1px solid #e5e7eb;
   padding: 0.5rem 0.75rem;
   text-align: left;
-}
-.admin-table th {
-  background-color: #f9fafb;
-  font-weight: 600;
-}
-.admin-table td button {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.8rem;
-}
-.admin-table td .btn-save,
-.admin-table td .btn-cancel {
-  font-size: 1rem;
-}
-.admin-table tfoot td {
-  background-color: #f9fafb;
-  padding-top: 1rem;
-  border-top: 2px solid #e5e7eb;
-}
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-.admin-table th,
-.admin-table td {
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem 0.75rem;
-  text-align: left;
+  vertical-align: middle;
 }
 .admin-table th {
   background-color: #f9fafb;
@@ -1179,22 +1049,37 @@ body {
 }
 
 /* ==========================================================================
-   Print-Friendly Styles
-   ========================================================================== */
+      4. MEDIA QUERIES
+      ========================================================================== */
 
+/* Motion Preference */
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 800px) {
+  .navbar-link .navbar-text {
+    display: none;
+  }
+}
+
+/* Print Styles */
 @media print {
-  /* Hide everything on the page by default */
+  /* Hide all elements by default */
   body * {
     visibility: hidden;
   }
 
-  /* Only show the printable container and its children */
+  /* Make the printable container and its children visible */
   .printable-container,
   .printable-container * {
     visibility: visible;
   }
 
-  /* Position the printable container at the top-left of the page */
+  /* Position the container at the top left for printing */
   .printable-container {
     position: absolute;
     left: 0;
@@ -1202,7 +1087,13 @@ body {
     width: 100%;
   }
 
-  /* Basic table styling for the print view */
+  .print-title {
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
   .print-table {
     width: 100%;
     border-collapse: collapse;
@@ -1219,17 +1110,6 @@ body {
     background-color: #f2f2f2;
     font-weight: bold;
   }
-  .print-title {
-    font-size: 18pt;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-}
-/* ... at the end of the file, inside @media print */
-
-@media print {
-  /* ... existing print styles ... */
 
   .print-nested-table {
     width: 100%;
@@ -1242,10 +1122,4 @@ body {
     border: 1px solid #ddd;
     padding: 4px;
   }
-}
-.modal-content {
-  background-color: lightgray;
-  border-radius: 12px;
-  padding: 3rem;
-  border: 1px solid;
 }
