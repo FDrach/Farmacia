@@ -13,6 +13,7 @@ import ProveedoresAdmin from "./pages/admin/ProveedoresAdmin";
 import MedicamentosAdmin from "./pages/admin/MedicamentosAdmin";
 import CategoriasAdmin from "./pages/admin/CategoriasAdmin";
 import ComprasAdmin from "./pages/admin/ComprasAdmin";
+import VentasList from "./components/VentasList";
 import "./App.css";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
                 <Route path="medicamentos" element={<MedicamentosAdmin />} />
                 <Route path="categorias" element={<CategoriasAdmin />} />
                 <Route path="compras" element={<ComprasAdmin />} />
+                <Route path="ventas" element={<VentasList />} />
               </Route>
             </Route>
           </Routes>
