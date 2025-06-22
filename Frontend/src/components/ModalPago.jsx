@@ -1,51 +1,20 @@
 import { useState } from "react";
-import useVentaStore from "../store/ventaStore"; // Importa el store
+import { usePago } from "../hooks/usePago";
 
 export default function ModalPago({ open, total, onClose, onPagar, id_cliente, id_usuario, carrito }) {
-  const [metodo, setMetodo] = useState("");
-  const [pago, setPago] = useState("");
-  const [vuelto, setVuelto] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [factura, setFactura] = useState(null);
-
-  const guardarVenta = useVentaStore((state) => state.guardarVenta); // Hook de zustand
-
-  const handleMetodo = (m) => {
-    setMetodo(m);
-    setPago("");
-    setVuelto(null);
-  };
-
-  const handlePagoChange = (e) => {
-    const value = e.target.value.replace(",", ".");
-    setPago(value);
-    const num = parseFloat(value);
-    if (!isNaN(num) && num >= total) {
-      setVuelto((num - total).toFixed(2));
-    } else {
-      setVuelto(null);
-    }
-  };
-
-  const handleConfirmarPago = async (metodo_pago) => {
-    setLoading(true);
-    try {
-      const ventaData = {
-        id_cliente,
-        id_usuario,
-        total,
-        metodo_pago,
-        fecha: new Date().toISOString().slice(0, 19).replace('T', ' '),
-        medicamentos_vendidos: carrito
-      };
-      const res = await guardarVenta(ventaData); // Usa zustand en vez de axios directo
-      setFactura(res); // Guarda los datos de la factura
-      onPagar && onPagar(metodo_pago, pago, vuelto); // Limpia carrito si lo necesitas
-    } catch (err) {
-      alert("Error al registrar la venta");
-    }
-    setLoading(false);
-  };
+  const {
+    metodo, setMetodo,
+    pago,
+    vuelto,
+    loading,
+    factura, setFactura,
+    nombreTarjeta, setNombreTarjeta,
+    numeroTarjeta, setNumeroTarjeta,
+    vencimiento, setVencimiento,
+    cvv, setCvv,
+    handlePagoChange,
+    handleConfirmarPago
+  } = usePago({ id_cliente, id_usuario, total, carrito, onPagar });
 
   if (!open) return null;
 
@@ -75,8 +44,8 @@ export default function ModalPago({ open, total, onClose, onPagar, id_cliente, i
             </button>
             {!metodo && (
               <div className="modal-pago-opciones">
-                <button onClick={() => handleMetodo("tarjeta")}>Tarjeta</button>
-                <button onClick={() => handleMetodo("efectivo")}>Efectivo</button>
+                <button onClick={() => setMetodo("tarjeta")}>Tarjeta</button>
+                <button onClick={() => setMetodo("efectivo")}>Efectivo</button>
               </div>
             )}
             {metodo && (
@@ -90,12 +59,90 @@ export default function ModalPago({ open, total, onClose, onPagar, id_cliente, i
             {metodo === "tarjeta" && (
               <div className="modal-pago-tarjeta">
                 <h2>Tarjeta</h2>
-                <p>
-                  Total a pagar: <b>${total.toFixed(2)}</b>
-                </p>
-                <button className="modal-pago-confirmar" onClick={() => { onPagar("tarjeta"); handleConfirmarPago("tarjeta"); }}>
-                  Confirmar pago con tarjeta
-                </button>
+                <form className="tarjeta-form-grid"
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    // Aquí puedes validar los datos antes de continuar
+                    await handleConfirmarPago("tarjeta");
+                  }}
+                >
+                  <div className="tarjeta-form-row">
+                    <div>
+                      <label>
+                        Número tarjeta
+                        <input
+                          type="text"
+                          required
+                          maxLength={19}
+                          value={numeroTarjeta}
+                          onChange={e => setNumeroTarjeta(e.target.value.replace(/[^\d ]/g, ""))}
+                          placeholder="1234 5678 9012 3456"
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        Válida hasta
+                        <input
+                          type="text"
+                          required
+                          maxLength={5}
+                          value={vencimiento}
+                          onChange={e => setVencimiento(e.target.value.replace(/[^\d/]/g, ""))}
+                          placeholder="mm / aa"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="tarjeta-form-row">
+                    <div>
+                      <label>
+                        Nombre
+                        <input
+                          type="text"
+                          required
+                          value={nombreTarjeta}
+                          onChange={e => setNombreTarjeta(e.target.value)}
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        CVV
+                        <input
+                          type="password"
+                          required
+                          maxLength={4}
+                          value={cvv}
+                          onChange={e => setCvv(e.target.value.replace(/[^\d]/g, ""))}
+                          placeholder="123"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="tarjeta-form-row">
+                    <div style={{ gridColumn: "1 / span 2" }}>
+                      <label>
+                        Tipo y número de documento
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
+                          <select style={{ width: "90px" }}>
+                            <option>DNI</option>
+                            <option>CUIT</option>
+                            <option>Pasaporte</option>
+                          </select>
+                          <input
+                            type="text"
+                            placeholder="Documento"
+                            style={{ flex: 1 }}
+                          />
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <button className="modal-pago-confirmar" type="submit" disabled={loading}>
+                    Confirmar pago con tarjeta
+                  </button>
+                </form>
               </div>
             )}
             {metodo === "efectivo" && (
