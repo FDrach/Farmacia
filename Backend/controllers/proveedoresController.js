@@ -99,6 +99,8 @@ const getProveedoresConMedicamentos = (req, res) => {
               mp.id_proveedor,
               JSON_ARRAYAGG(
                   JSON_OBJECT(
+                      'id', mp.id,
+                      'id_medicamento_base', m.id,
                       'medicamento_base_nombre', m.Nombre,
                       'nombre_proveedor_articulo', mp.nombre_proveedor_articulo,
                       'precio_compra', mp.precio_compra,

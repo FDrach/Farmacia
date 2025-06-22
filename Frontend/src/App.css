@@ -1191,3 +1191,50 @@ body {
   color: #888;
   font-size: 1.1rem;
 }
+
+/* ==========================================================================
+   Admin Card Grid Layout
+   ========================================================================== */
+
+.admin-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-card {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.admin-card .item-main-info,
+.admin-card .item-details,
+.admin-card .item-actions {
+  border-top: none; /* Remove lines inside the card */
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.admin-card .item-main-info {
+  margin-bottom: 0.5rem;
+}
+
+.admin-card .item-details {
+  flex-grow: 1; /* Pushes actions to the bottom */
+  margin-bottom: 1rem;
+}
+
+.admin-card .item-actions {
+  margin-top: auto; /* Aligns actions to the bottom */
+}

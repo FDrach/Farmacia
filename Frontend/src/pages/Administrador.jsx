@@ -24,6 +24,9 @@ export default function Administrador() {
         <NavLink to="/administrador/categorias" className="admin-nav-link">
           Categorías
         </NavLink>
+        <NavLink to="/administrador/compras" className="admin-nav-link">
+          Comprar
+        </NavLink>
       </nav>
       <div className="admin-content">
         {isBaseAdminPath && (
