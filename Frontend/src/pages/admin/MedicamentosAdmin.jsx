@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMedicamentosAdmin } from "../../hooks/useMedicamentosAdmin";
+import PrintButton from "../../components/PrintButton";
 import "../../App.css";
 
 export default function MedicamentosAdmin() {
@@ -10,7 +11,7 @@ export default function MedicamentosAdmin() {
     error,
     addMedicamento,
     updateMedicamento,
-    removeMedicamento, // Added for completeness
+    removeMedicamento,
   } = useMedicamentosAdmin();
   const [editingId, setEditingId] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -19,29 +20,56 @@ export default function MedicamentosAdmin() {
   if (error) return <p className="error-message">{error}</p>;
 
   const handleSave = (data) => {
-    // We check if we are editing or adding
-    if (editingId) {
-      return updateMedicamento(editingId, data);
-    } else {
-      return addMedicamento(data);
-    }
+    const action = editingId
+      ? updateMedicamento(editingId, data)
+      : addMedicamento(data);
+    action
+      .catch((err) => alert(err.message))
+      .finally(() => {
+        setEditingId(null);
+        setIsAdding(false);
+      });
   };
 
   const handleDelete = (id) => {
     if (window.confirm("¿Está seguro? Esta acción no se puede deshacer.")) {
-        removeMedicamento(id).catch(err => alert(err.message));
+      removeMedicamento(id).catch((err) => alert(err.message));
     }
   };
+
+  const printColumns = {
+    Nombre: "Nombre",
+    precio: "Precio",
+    Stock: "Stock",
+    Venta_libre: "Venta Libre",
+    categorias: "Categorías",
+  };
+
+  const dataToPrint = medicamentos.map((med) => ({
+    ...med,
+    Venta_libre: med.Venta_libre ? "Sí" : "No",
+    categorias: med.categorias.join(", ") || "N/A",
+  }));
 
   return (
     <div className="admin-list-container">
       <div className="admin-list-header">
         <h3>Lista de Medicamentos</h3>
-        {!isAdding && (
-             <button className="btn btn-save" onClick={() => { setEditingId(null); setIsAdding(true); }}>
-                Añadir Medicamento
+        <div>
+          {/* Use the new PrintButton component */}
+          <PrintButton
+            data={dataToPrint}
+            columns={printColumns}
+            title="Lista de Medicamentos"
+            className="btn btn-edit"
+            style={{ marginRight: "1rem" }}
+          />
+          {!isAdding && !editingId && (
+            <button className="btn btn-save" onClick={() => setIsAdding(true)}>
+              Añadir Medicamento
             </button>
-        )}
+          )}
+        </div>
       </div>
 
       {isAdding && (
@@ -66,7 +94,10 @@ export default function MedicamentosAdmin() {
           ) : (
             <MedicamentoDisplay
               medicamento={med}
-              onEdit={() => { setIsAdding(false); setEditingId(med.id); }}
+              onEdit={() => {
+                setIsAdding(false);
+                setEditingId(med.id);
+              }}
               onDelete={handleDelete}
             />
           )}
@@ -76,7 +107,6 @@ export default function MedicamentosAdmin() {
   );
 }
 
-// Display Component - Added onDelete prop
 function MedicamentoDisplay({ medicamento, onEdit, onDelete }) {
   return (
     <>
@@ -85,37 +115,50 @@ function MedicamentoDisplay({ medicamento, onEdit, onDelete }) {
         <span className="item-price">${medicamento.precio}</span>
       </div>
       <div className="item-details">
-        <p><strong>Stock:</strong> {medicamento.Stock}</p>
-        <p><strong>Venta Libre:</strong> {medicamento.Venta_libre ? "Sí" : "No"}</p>
-        <p><strong>Categorías:</strong> {medicamento.categorias?.join(", ") || "Ninguna"}</p>
+        <p>
+          <strong>Stock:</strong> {medicamento.Stock}
+        </p>
+        <p>
+          <strong>Venta Libre:</strong> {medicamento.Venta_libre ? "Sí" : "No"}
+        </p>
+        <p>
+          <strong>Categorías:</strong>{" "}
+          {medicamento.categorias?.join(", ") || "Ninguna"}
+        </p>
       </div>
       <div className="item-actions">
-        <button onClick={onEdit} className="btn btn-edit">Editar</button>
-        <button onClick={() => onDelete(medicamento.id)} className="btn btn-delete">Eliminar</button>
+        <button onClick={onEdit} className="btn btn-edit">
+          Editar
+        </button>
+        <button
+          onClick={() => onDelete(medicamento.id)}
+          className="btn btn-delete"
+        >
+          Eliminar
+        </button>
       </div>
     </>
   );
 }
 
-// Form Component - Corrected state initialization
 function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
-    
-    // This is the corrected, robust way to initialize state
-    const getInitialCategoryIds = () => {
-        if (!medicamento || !medicamento.categorias) return [];
-        return medicamento.categorias.map(catName => {
-            const cat = allCategorias.find(c => c.nombre === catName);
-            return cat ? cat.id : null;
-        }).filter(id => id !== null);
-    };
+  const getInitialCategoryIds = () => {
+    if (!medicamento || !medicamento.categorias) return [];
+    return medicamento.categorias
+      .map((catName) => {
+        const cat = allCategorias.find((c) => c.nombre === catName);
+        return cat ? cat.id : null;
+      })
+      .filter((id) => id !== null);
+  };
 
-    const [formData, setFormData] = useState({
-        Nombre: medicamento?.Nombre || "",
-        precio: medicamento?.precio || "",
-        Stock: medicamento?.Stock || "",
-        Venta_libre: medicamento?.Venta_libre || false,
-        categorias: getInitialCategoryIds()
-    });
+  const [formData, setFormData] = useState({
+    Nombre: medicamento?.Nombre || "",
+    precio: medicamento?.precio || "",
+    Stock: medicamento?.Stock || "",
+    Venta_libre: medicamento?.Venta_libre || false,
+    categorias: getInitialCategoryIds(),
+  });
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;

@@ -84,9 +84,55 @@ const deleteProveedor = (req, res) => {
   });
 };
 
+const getProveedoresConMedicamentos = (req, res) => {
+  const query = `
+      SELECT
+          p.id,
+          p.nombre,
+          p.direccion,
+          p.cuil,
+          COALESCE(pm.medicamentos, '[]') AS medicamentos
+      FROM
+          Proveedores p
+      LEFT JOIN (
+          SELECT
+              mp.id_proveedor,
+              JSON_ARRAYAGG(
+                  JSON_OBJECT(
+                      'medicamento_base_nombre', m.Nombre,
+                      'nombre_proveedor_articulo', mp.nombre_proveedor_articulo,
+                      'precio_compra', mp.precio_compra,
+                      'stock', mp.stock
+                  )
+              ) AS medicamentos
+          FROM MedicamentosProv mp
+          JOIN Medicamentos m ON mp.id_medicamento_base = m.id
+          GROUP BY mp.id_proveedor
+      ) AS pm ON p.id = pm.id_proveedor
+      ORDER BY p.nombre;
+  `;
+
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error("Error fetching providers with medications:", error);
+      return res
+        .status(500)
+        .json({ message: "Error al obtener los datos de proveedores." });
+    }
+
+    const formattedResults = results.map((provider) => ({
+      ...provider,
+      medicamentos: JSON.parse(provider.medicamentos),
+    }));
+
+    res.status(200).json(formattedResults);
+  });
+};
+
 module.exports = {
   getProveedores,
   createProveedor,
   updateProveedor,
   deleteProveedor,
+  getProveedoresConMedicamentos,
 };

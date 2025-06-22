@@ -28,6 +28,33 @@ export function useProveedoresAdmin() {
     fetchData();
   }, [fetchData]);
 
+  const getProveedoresConMedicamentos = async () => {
+    setLoading(true);
+    try {
+      const provRes = await axios.get(`${API_BASE_URL}/proveedores`);
+      const allProveedores = provRes.data;
+
+      const detailedProveedores = await Promise.all(
+        allProveedores.map(async (proveedor) => {
+          const medsRes = await axios.get(
+            `${API_BASE_URL}/medicamentos-prov/proveedor/${proveedor.id}`
+          );
+          return {
+            ...proveedor,
+            medicamentos: medsRes.data,
+          };
+        })
+      );
+      return detailedProveedores;
+    } catch (err) {
+      console.error("Error fetching detailed provider data for printing:", err);
+      setError("Error al preparar los datos para imprimir.");
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const addProveedor = async (data) => {
     try {
       await axios.post(`${API_BASE_URL}/proveedores/create`, data);
@@ -92,5 +119,6 @@ export function useProveedoresAdmin() {
     addMedToProvider,
     updateMedFromProvider,
     removeMedFromProvider,
+    getProveedoresConMedicamentos,
   };
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useUsuariosAdmin } from "../../hooks/useUsuariosAdmin";
+import PrintButton from "../../components/PrintButton";
 import "../../App.css";
 
 function UsuarioForm({ usuario, onSave, onCancel }) {
@@ -123,6 +124,15 @@ export default function UsuariosAdmin() {
   if (loading) return <p className="loading-message">Cargando usuarios...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
+  const printColumns = {
+    nombre: "Nombre",
+    dni: "DNI",
+    usuario: "Usuario",
+    tipo: "Permisos",
+    Horario: "Horario",
+    Sueldo: "Sueldo",
+  };
+
   const handleOpenModal = (usuario = null) => {
     setCurrentUser(usuario);
     setIsModalOpen(true);
@@ -134,16 +144,15 @@ export default function UsuariosAdmin() {
   };
 
   const handleSave = (data) => {
-    if (currentUser) {
-      return updateUser(currentUser.id, data);
-    } else {
-      return addUser(data);
-    }
+    const action = currentUser
+      ? updateUser(currentUser.id, data)
+      : addUser(data);
+    action.catch((err) => alert(err.message)).finally(handleCloseModal);
   };
 
   const handleDelete = (id) => {
     if (window.confirm("¿Está seguro de que desea eliminar este usuario?")) {
-      removeUser(id);
+      removeUser(id).catch((err) => alert(err.message));
     }
   };
 
@@ -151,9 +160,19 @@ export default function UsuariosAdmin() {
     <div className="admin-list-container">
       <div className="admin-list-header">
         <h3>Lista de Usuarios</h3>
-        <button className="btn btn-save" onClick={() => handleOpenModal()}>
-          Añadir Usuario
-        </button>
+        <div>
+          {/* Use the PrintButton component */}
+          <PrintButton
+            data={usuarios}
+            columns={printColumns}
+            title="Lista de Usuarios"
+            className="btn btn-edit"
+            style={{ marginRight: "1rem" }}
+          />
+          <button className="btn btn-save" onClick={() => handleOpenModal()}>
+            Añadir Usuario
+          </button>
+        </div>
       </div>
 
       {usuarios.map((user) => (

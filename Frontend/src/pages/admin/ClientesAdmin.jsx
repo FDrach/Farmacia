@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useClientesAdmin } from "../../hooks/useClientesAdmin";
+import PrintButton from "../../components/PrintButton";
 import "../../App.css";
 
 function ClienteForm({
@@ -118,6 +119,12 @@ export default function ClientesAdmin() {
   if (loading) return <p className="loading-message">Cargando clientes...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
+  const printColumns = {
+    Nombre: "Nombre",
+    dni: "DNI",
+    obra_social_nombre: "Obra Social",
+  };
+
   const handleOpenModal = (cliente = null) => {
     setCurrentCliente(cliente);
     setIsModalOpen(true);
@@ -129,11 +136,10 @@ export default function ClientesAdmin() {
   };
 
   const handleSave = (data) => {
-    if (currentCliente) {
-      return updateCliente(currentCliente.id, data);
-    } else {
-      return addCliente(data);
-    }
+    const action = currentCliente
+      ? updateCliente(currentCliente.id, data)
+      : addCliente(data);
+    action.catch((err) => alert(err.message)).finally(handleCloseModal);
   };
 
   const handleDelete = (id) => {
@@ -146,9 +152,19 @@ export default function ClientesAdmin() {
     <div className="admin-list-container">
       <div className="admin-list-header">
         <h3>Lista de Clientes</h3>
-        <button className="btn btn-save" onClick={() => handleOpenModal()}>
-          Añadir Cliente
-        </button>
+        <div>
+          {/* Use the new PrintButton component */}
+          <PrintButton
+            data={clientes}
+            columns={printColumns}
+            title="Lista de Clientes"
+            className="btn btn-edit"
+            style={{ marginRight: "1rem" }}
+          />
+          <button className="btn btn-save" onClick={() => handleOpenModal()}>
+            Añadir Cliente
+          </button>
+        </div>
       </div>
       {clientes.map((cliente) => (
         <div key={cliente.id} className="admin-list-item">

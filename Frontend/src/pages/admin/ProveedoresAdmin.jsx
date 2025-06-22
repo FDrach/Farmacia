@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useProveedoresAdmin } from "../../hooks/useProveedoresAdmin";
 import ManageProviderMeds from "./ManageProviderMeds";
+import PrintProveedores from "../../components/PrintProveedores";
 import "../../App.css";
 
 function ProveedorForm({ proveedor, onSave, onCancel }) {
@@ -99,9 +100,13 @@ export default function ProveedoresAdmin() {
     <div className="admin-list-container">
       <div className="admin-list-header">
         <h3>Lista de Proveedores</h3>
-        <button className="btn btn-save" onClick={() => handleOpenForm()}>
-          Añadir Proveedor
-        </button>
+        <div>
+          {/* Use the new PrintProveedores component */}
+          <PrintProveedores style={{ marginRight: "1rem" }} />
+          <button className="btn btn-save" onClick={() => handleOpenForm()}>
+            Añadir Proveedor
+          </button>
+        </div>
       </div>
       {hook.proveedores.map((prov) => (
         <div key={prov.id} className="admin-list-item">
