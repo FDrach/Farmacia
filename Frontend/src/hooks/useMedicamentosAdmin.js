@@ -32,8 +32,12 @@ export function useMedicamentosAdmin() {
 
   const addMedicamento = async (data) => {
     try {
-      await axios.post(`${API_BASE_URL}/medicamentos/create`, data);
+      const response = await axios.post(
+        `${API_BASE_URL}/medicamentos/create`,
+        data
+      );
       await fetchData();
+      return response.data.id;
     } catch (err) {
       console.error("Error creating medicamento:", err);
       throw new Error(

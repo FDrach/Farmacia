@@ -252,12 +252,10 @@ const deleteMedicamento = (req, res) => {
   connection.query(query, [id], (error, results) => {
     if (error) {
       console.error("Error deleting medication:", error);
-      return res
-        .status(500)
-        .json({
-          message:
-            "Error al eliminar el medicamento. Puede que esté asociado a ventas existentes.",
-        });
+      return res.status(500).json({
+        message:
+          "Error al eliminar el medicamento. Puede que esté asociado a ventas existentes.",
+      });
     }
 
     if (results.affectedRows === 0) {

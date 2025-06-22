@@ -3,196 +3,6 @@ import { useMedicamentosAdmin } from "../../hooks/useMedicamentosAdmin";
 import PrintButton from "../../components/PrintButton";
 import "../../App.css";
 
-function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
-  const [formData, setFormData] = useState({
-    Nombre: medicamento?.Nombre || "",
-    precio: medicamento?.precio || "",
-    Stock: medicamento?.Stock || "",
-    Venta_libre: medicamento?.Venta_libre || false,
-    categorias: medicamento
-      ? medicamento.categorias
-          .map((catName) => {
-            const cat = allCategorias.find((c) => c.nombre === catName);
-            return cat ? cat.id : null;
-          })
-          .filter((id) => id !== null)
-      : [],
-  });
-  const [selectedFile, setSelectedFile] = useState(null);
-  const { uploadImage } = useMedicamentosAdmin();
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const handleCategoryChange = (catId) => {
-    setFormData((prev) => {
-      const newCategorias = prev.categorias.includes(catId)
-        ? prev.categorias.filter((id) => id !== catId)
-        : [...prev.categorias, catId];
-      return { ...prev, categorias: newCategorias };
-    });
-  };
-
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const dataToSubmit = {
-      ...formData,
-      Venta_libre: formData.Venta_libre ? 1 : 0,
-    };
-    try {
-      await onSave(dataToSubmit);
-
-      if (medicamento && selectedFile) {
-        const imageFormData = new FormData();
-        imageFormData.append("medicamentoImage", selectedFile);
-        await uploadImage(medicamento.id, imageFormData);
-      }
-      onCancel();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="admin-form">
-      <h4 style={{ margin: "0 0 1rem 0", color: "#1f2937" }}>
-        {medicamento ? "Editando Medicamento" : "Nuevo Medicamento"}
-      </h4>
-      <input
-        type="text"
-        name="Nombre"
-        value={formData.Nombre}
-        onChange={handleInputChange}
-        className="form-input"
-        placeholder="Nombre del Medicamento"
-        required
-      />
-      <div className="form-group-inline">
-        <input
-          type="number"
-          name="precio"
-          value={formData.precio}
-          onChange={handleInputChange}
-          className="form-input"
-          placeholder="Precio"
-          step="0.01"
-          required
-        />
-        <input
-          type="number"
-          name="Stock"
-          value={formData.Stock}
-          onChange={handleInputChange}
-          className="form-input"
-          placeholder="Stock"
-          required
-        />
-      </div>
-      <div className="form-checkbox-group">
-        <label>
-          <input
-            type="checkbox"
-            name="Venta_libre"
-            checked={!!formData.Venta_libre}
-            onChange={handleInputChange}
-          />
-          Venta Libre
-        </label>
-      </div>
-
-      {/* Only show image upload when editing an existing medication */}
-      {medicamento && (
-        <div className="form-group">
-          <label htmlFor="medicamentoImage">
-            Cambiar Imagen (actual: {medicamento.id}.png)
-          </label>
-          <input
-            type="file"
-            name="medicamentoImage"
-            id="medicamentoImage"
-            className="form-input"
-            onChange={handleFileChange}
-            accept="image/png"
-          />
-          <small style={{ color: "#6b7280" }}>
-            Dejar en blanco para no modificar la imagen actual.
-          </small>
-        </div>
-      )}
-
-      <div className="form-category-group">
-        <p>
-          <strong>Categorías:</strong>
-        </p>
-        <div className="category-options">
-          {allCategorias.map((cat) => (
-            <label key={cat.id} className="category-tag">
-              <input
-                type="checkbox"
-                value={cat.id}
-                checked={formData.categorias.includes(cat.id)}
-                onChange={() => handleCategoryChange(cat.id)}
-              />
-              {cat.nombre}
-            </label>
-          ))}
-        </div>
-      </div>
-      <div className="item-actions">
-        <button type="submit" className="btn btn-save">
-          Guardar
-        </button>
-        <button type="button" onClick={onCancel} className="btn btn-cancel">
-          Cancelar
-        </button>
-      </div>
-    </form>
-  );
-}
-
-function MedicamentoDisplay({ medicamento, onEdit, onDelete }) {
-  return (
-    <>
-      <div className="item-main-info">
-        <span className="item-title">{medicamento.Nombre}</span>
-        <span className="item-price">${medicamento.precio}</span>
-      </div>
-      <div className="item-details">
-        <p>
-          <strong>Stock:</strong> {medicamento.Stock}
-        </p>
-        <p>
-          <strong>Venta Libre:</strong> {medicamento.Venta_libre ? "Sí" : "No"}
-        </p>
-        <p>
-          <strong>Categorías:</strong>{" "}
-          {medicamento.categorias?.join(", ") || "Ninguna"}
-        </p>
-      </div>
-      <div className="item-actions">
-        <button onClick={onEdit} className="btn btn-edit">
-          Editar
-        </button>
-        <button
-          onClick={() => onDelete(medicamento.id)}
-          className="btn btn-delete"
-        >
-          Eliminar
-        </button>
-      </div>
-    </>
-  );
-}
-
 export default function MedicamentosAdmin() {
   const {
     medicamentos,
@@ -202,6 +12,7 @@ export default function MedicamentosAdmin() {
     addMedicamento,
     updateMedicamento,
     removeMedicamento,
+    uploadImage,
   } = useMedicamentosAdmin();
   const [editingId, setEditingId] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -209,17 +20,22 @@ export default function MedicamentosAdmin() {
   if (loading) return <p className="loading-message">Cargando...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
-  const handleSave = (data) => {
-    const action = editingId
-      ? updateMedicamento(editingId, data)
-      : addMedicamento(data);
-
-    action
-      .catch((err) => alert(err.message))
-      .finally(() => {
-        setEditingId(null);
-        setIsAdding(false);
-      });
+  const handleSave = async (data, file) => {
+    if (editingId) {
+      await updateMedicamento(editingId, data);
+      if (file) {
+        const imageFormData = new FormData();
+        imageFormData.append("medicamentoImage", file);
+        await uploadImage(editingId, imageFormData);
+      }
+    } else {
+      const newId = await addMedicamento(data);
+      if (file && newId) {
+        const imageFormData = new FormData();
+        imageFormData.append("medicamentoImage", file);
+        await uploadImage(newId, imageFormData);
+      }
+    }
   };
 
   const handleDelete = (id) => {
@@ -294,5 +110,192 @@ export default function MedicamentosAdmin() {
         </div>
       ))}
     </div>
+  );
+}
+
+function MedicamentoDisplay({ medicamento, onEdit, onDelete }) {
+  return (
+    <>
+      <div className="item-main-info">
+        <span className="item-title">{medicamento.Nombre}</span>
+        <span className="item-price">${medicamento.precio}</span>
+      </div>
+      <div className="item-details">
+        <p>
+          <strong>Stock:</strong> {medicamento.Stock}
+        </p>
+        <p>
+          <strong>Venta Libre:</strong> {medicamento.Venta_libre ? "Sí" : "No"}
+        </p>
+        <p>
+          <strong>Categorías:</strong>{" "}
+          {medicamento.categorias?.join(", ") || "Ninguna"}
+        </p>
+      </div>
+      <div className="item-actions">
+        <button onClick={onEdit} className="btn btn-edit">
+          Editar
+        </button>
+        <button
+          onClick={() => onDelete(medicamento.id)}
+          className="btn btn-delete"
+        >
+          Eliminar
+        </button>
+      </div>
+    </>
+  );
+}
+
+function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
+  const getInitialCategoryIds = () => {
+    if (!medicamento || !medicamento.categorias) return [];
+    return medicamento.categorias
+      .map((catName) => {
+        const cat = allCategorias.find((c) => c.nombre === catName);
+        return cat ? cat.id : null;
+      })
+      .filter((id) => id !== null);
+  };
+
+  const [formData, setFormData] = useState({
+    Nombre: medicamento?.Nombre || "",
+    precio: medicamento?.precio || "",
+    Stock: medicamento?.Stock || "",
+    Venta_libre: medicamento?.Venta_libre || false,
+    categorias: getInitialCategoryIds(),
+  });
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleCategoryChange = (catId) => {
+    setFormData((prev) => {
+      const newCategorias = prev.categorias.includes(catId)
+        ? prev.categorias.filter((id) => id !== catId)
+        : [...prev.categorias, catId];
+      return { ...prev, categorias: newCategorias };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const dataToSubmit = {
+      ...formData,
+      Venta_libre: formData.Venta_libre ? 1 : 0,
+    };
+    try {
+      await onSave(dataToSubmit, selectedFile);
+      onCancel();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="admin-form">
+      <h4 style={{ margin: "0 0 1rem 0", color: "#1f2937" }}>
+        {medicamento ? "Editando Medicamento" : "Nuevo Medicamento"}
+      </h4>
+      <input
+        type="text"
+        name="Nombre"
+        value={formData.Nombre}
+        onChange={handleInputChange}
+        className="form-input"
+        placeholder="Nombre del Medicamento"
+        required
+      />
+      <div className="form-group-inline">
+        <input
+          type="number"
+          name="precio"
+          value={formData.precio}
+          onChange={handleInputChange}
+          className="form-input"
+          placeholder="Precio"
+          step="0.01"
+          required
+        />
+        <input
+          type="number"
+          name="Stock"
+          value={formData.Stock}
+          onChange={handleInputChange}
+          className="form-input"
+          placeholder="Stock"
+          required
+        />
+      </div>
+      <div className="form-checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="Venta_libre"
+            checked={!!formData.Venta_libre}
+            onChange={handleInputChange}
+          />
+          Venta Libre
+        </label>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="medicamentoImage">
+          {medicamento
+            ? `Cambiar Imagen (actual: ${medicamento.id}.png)`
+            : "Subir Imagen"}
+        </label>
+        <input
+          type="file"
+          name="medicamentoImage"
+          id="medicamentoImage"
+          className="form-input"
+          onChange={handleFileChange}
+          required={!medicamento}
+        />
+        {medicamento && (
+          <small style={{ color: "#6b7280" }}>
+            Dejar en blanco para no modificar la imagen actual.
+          </small>
+        )}
+      </div>
+
+      <div className="form-category-group">
+        <p>
+          <strong>Categorías:</strong>
+        </p>
+        <div className="category-options">
+          {allCategorias.map((cat) => (
+            <label key={cat.id} className="category-tag">
+              <input
+                type="checkbox"
+                value={cat.id}
+                checked={formData.categorias.includes(cat.id)}
+                onChange={() => handleCategoryChange(cat.id)}
+              />
+              {cat.nombre}
+            </label>
+          ))}
+        </div>
+      </div>
+      <div className="item-actions">
+        <button type="submit" className="btn btn-save">
+          Guardar
+        </button>
+        <button type="button" onClick={onCancel} className="btn btn-cancel">
+          Cancelar
+        </button>
+      </div>
+    </form>
   );
 }
