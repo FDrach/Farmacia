@@ -229,7 +229,9 @@ export default function Navbar() {
                   <ul className="navbar-cart-list">
                     {carrito.slice(0, 5).map((item, idx) => (
                       <li key={idx} className="navbar-cart-item">
-                        {item.Nombre || item.nombre}{" "}
+                        <span className="navbar-cart-producto-nombre">
+                          {item.Nombre || item.nombre}
+                        </span>
                         <span style={{ color: "#888" }}>x{item.cantidad}</span>
                       </li>
                     ))}
