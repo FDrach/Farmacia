@@ -15,6 +15,8 @@ export default function Navbar() {
   const [cartOpen, setCartOpen] = useState(false);
   const [categoriasOpen, setCategoriasOpen] = useState(false);
   const [drawerCategoriasOpen, setDrawerCategoriasOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  
   const menuRef = useRef();
   const cartRef = useRef();
   const categoriasRef = useRef();
@@ -28,15 +30,23 @@ export default function Navbar() {
 
   useBodyScrollLock(drawerOpen);
 
-  const handleLogout = () => {
-    logout();
-  };
-
   useEffect(() => {
     fetchCategorias();
   }, [fetchCategorias]);
 
-  // Cierra el menú si se hace clic fuera
+  const handleLogout = () => {
+    logout();
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/Productos?search=${encodeURIComponent(searchTerm.trim())}`);
+    } else {
+      navigate("/Productos");
+    }
+  };
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (cartRef.current && !cartRef.current.contains(event.target)) {
@@ -45,7 +55,10 @@ export default function Navbar() {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false);
       }
-      if (categoriasRef.current && !categoriasRef.current.contains(event.target)) {
+      if (
+        categoriasRef.current &&
+        !categoriasRef.current.contains(event.target)
+      ) {
         setCategoriasOpen(false);
       }
     }
@@ -77,11 +90,13 @@ export default function Navbar() {
           </button>
         </div>
         <div className="navbar-list-center">
-          <form className="navbar-search">
+          <form className="navbar-search" onSubmit={handleSearchSubmit}>
             <input
               type="text"
               className="navbar-search-input"
               placeholder="¿Qué está buscando?"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button className="navbar-search-btn" type="submit">
               <i className="fas fa-search"></i>
@@ -176,6 +191,7 @@ export default function Navbar() {
                     style={{ color: "#38b24a" }}
                     onClick={() => {
                       setCategoria(cat.nombre);
+                      navigate("/Productos");
                       setCategoriasOpen(false);
                     }}
                   >
@@ -198,22 +214,26 @@ export default function Navbar() {
               <i className="fas fa-shopping-cart"></i>
               <span className="navbar-text">Tu carrito</span>
               {/* Número de productos */}
-              <span className="navbar-cart-badge">
-                {carrito.length}
-              </span>
+              {carrito.length > 0 && (
+                <span className="navbar-cart-badge">{carrito.length}</span>
+              )}
             </span>
             {cartOpen && (
               <div className="navbar-cart-menu">
                 <div className="navbar-cart-title">Carrito</div>
                 {carrito.length === 0 ? (
-                  <div className="navbar-cart-empty">El carrito está vacío.</div>
+                  <div className="navbar-cart-empty">
+                    El carrito está vacío.
+                  </div>
                 ) : (
                   <ul className="navbar-cart-list">
-                    {carrito.map((item, idx) => (
+                    {carrito.slice(0, 5).map((item, idx) => (
                       <li key={idx} className="navbar-cart-item">
-                        {item.Nombre || item.nombre} <span style={{ color: "#888" }}>x{item.cantidad}</span>
+                        {item.Nombre || item.nombre}{" "}
+                        <span style={{ color: "#888" }}>x{item.cantidad}</span>
                       </li>
                     ))}
+                    {carrito.length > 5 && <li>...y más</li>}
                   </ul>
                 )}
                 <button
@@ -260,7 +280,12 @@ export default function Navbar() {
             >
               <i className="fas fa-th-large"></i>
               Categorías
-              <i className={`fas fa-caret-${drawerCategoriasOpen ? "up" : "down"}`} style={{ fontSize: "1rem" }}></i>
+              <i
+                className={`fas fa-caret-${
+                  drawerCategoriasOpen ? "up" : "down"
+                }`}
+                style={{ fontSize: "1rem" }}
+              ></i>
             </div>
             {drawerCategoriasOpen && (
               <ul className="drawer-categorias-list">
@@ -270,6 +295,7 @@ export default function Navbar() {
                     style={{ color: "#38b24a", fontWeight: "bold" }}
                     onClick={() => {
                       setCategoria(null);
+                      navigate("/Productos");
                       setDrawerOpen(false);
                     }}
                   >
@@ -283,6 +309,7 @@ export default function Navbar() {
                       style={{ color: "#38b24a" }}
                       onClick={() => {
                         setCategoria(cat.nombre);
+                        navigate("/Productos");
                         setDrawerOpen(false);
                       }}
                     >
