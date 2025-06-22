@@ -1,5 +1,5 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css");
 
 .logo {
   height: 6em;
@@ -32,13 +32,15 @@
 /* General */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   background: #fff;
   color: #222;
 }
 
 /* Haz que el body y el root ocupen toda la altura */
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   min-height: 100%;
   margin: 0;
@@ -46,7 +48,8 @@ html, body, #root {
 }
 
 /* Evita el desbordamiento horizontal */
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -145,14 +148,14 @@ html, body {
   align-items: stretch;
   margin: 0 auto;
   flex: none;
-  max-width: 420px;        /* Más angosto */
+  max-width: 420px; /* Más angosto */
   width: 100%;
   background: #fff;
-  border-radius: 12px;     /* Menos redondeado */
+  border-radius: 12px; /* Menos redondeado */
   border: 2px solid #38b24a; /* Verde */
   overflow: hidden;
   padding: 0;
-  height: 44px;            /* Más bajo */
+  height: 44px; /* Más bajo */
   box-sizing: border-box;
   position: relative;
   transition: border-color 0.2s;
@@ -206,19 +209,19 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 2rem;                /* Menos espacio entre columnas */
-  padding: 1.5rem 1rem;     /* Menos padding */
-  font-family: 'Segoe UI', Arial, sans-serif;
+  gap: 2rem; /* Menos espacio entre columnas */
+  padding: 1.5rem 1rem; /* Menos padding */
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 .footer-col {
   flex: 1;
-  min-width: 160px;         /* Más angosto */
+  min-width: 160px; /* Más angosto */
 }
 
 .footer-col h3 {
   margin-bottom: 0.7rem;
-  font-size: 1.1rem;        /* Más chico */
+  font-size: 1.1rem; /* Más chico */
   font-weight: bold;
   letter-spacing: 1px;
 }
@@ -230,8 +233,8 @@ html, body {
 }
 
 .footer-col ul li {
-  margin-bottom: 0.6rem;    /* Menos espacio entre items */
-  font-size: 1rem;          /* Más chico */
+  margin-bottom: 0.6rem; /* Menos espacio entre items */
+  font-size: 1rem; /* Más chico */
   cursor: pointer;
   transition: color 0.2s;
 }
@@ -244,7 +247,7 @@ html, body {
 }
 
 .icon {
-  font-size: 1.3rem;        /* Más chico */
+  font-size: 1.3rem; /* Más chico */
   width: 32px;
   height: 32px;
 }
@@ -291,22 +294,22 @@ html, body {
 .footer-form form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;              /* Menos espacio entre campos */
+  gap: 0.5rem; /* Menos espacio entre campos */
 }
 
 .footer-form input,
 .footer-form textarea {
-  padding: 0.4rem;          /* Menos padding */
-  font-size: 1rem;          /* Más chico */
+  padding: 0.4rem; /* Menos padding */
+  font-size: 1rem; /* Más chico */
   margin-bottom: 0.2rem;
 }
 
 .footer-form textarea {
-  min-height: 60px;         /* Más bajo */
+  min-height: 60px; /* Más bajo */
 }
 
 .footer-form button {
-  padding: 0.4rem 1.2rem;   /* Botón más pequeño */
+  padding: 0.4rem 1.2rem; /* Botón más pequeño */
   font-size: 1rem;
   margin-top: 0.2rem;
 }
@@ -403,7 +406,7 @@ html, body {
   width: 270px;
   height: 100vh;
   background: #fff;
-  box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.08);
   z-index: 2000;
   transition: left 0.3s;
   padding: 1.5rem 1rem 1rem 1rem;
@@ -446,8 +449,11 @@ html, body {
 /* Fondo oscuro al abrir el drawer */
 .drawer-backdrop {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.18);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.18);
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
@@ -468,8 +474,11 @@ html, body {
 /* Estilos para el modal de login */
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.35);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -480,7 +489,7 @@ html, body {
   background: #fff;
   border-radius: 12px;
   padding: 2.5rem 2rem 2rem 2rem;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.18);
   min-width: 340px;
   max-width: 90vw;
   position: relative;
@@ -842,67 +851,67 @@ html, body {
    Admin Page Styles
    ========================================================================== */
 
-   .admin-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  }
-  
-  .admin-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1.5rem;
-  }
-  
-  .admin-nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
-  }
-  
-  .admin-nav-link {
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    color: #555;
-    font-weight: 500;
-    border-radius: 6px;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  
-  .admin-nav-link:hover {
-    background-color: #e9e9e9;
-    color: #111;
-  }
-  
-  .admin-nav-link.active {
-    background-color: #38b24a;
-    color: #fff;
-  }
-  
-  .admin-content {
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 6px;
-    border: 1px solid #eee;
-    min-height: 300px;
-  }
-  
-  .admin-welcome {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #777;
-    padding: 3rem 0;
-  }
+.admin-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
 
-  /* ==========================================================================
+.admin-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.admin-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+}
+
+.admin-nav-link {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.admin-nav-link:hover {
+  background-color: #e9e9e9;
+  color: #111;
+}
+
+.admin-nav-link.active {
+  background-color: #38b24a;
+  color: #fff;
+}
+
+.admin-content {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  min-height: 300px;
+}
+
+.admin-welcome {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+  padding: 3rem 0;
+}
+
+/* ==========================================================================
    Reusable Admin List & Form Styles
    ========================================================================== */
 
@@ -917,12 +926,12 @@ html, body {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 1rem 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: box-shadow 0.2s;
 }
 
 .admin-list-item:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .item-main-info {
@@ -1060,7 +1069,8 @@ html, body {
 }
 
 /* Generic messages */
-.loading-message, .error-message {
+.loading-message,
+.error-message {
   text-align: center;
   font-size: 1.1rem;
   padding: 2rem;
@@ -1102,10 +1112,10 @@ html, body {
   gap: 1rem;
   /* --- Style additions below --- */
   background-color: #f9fafb; /* Light grey background for the form */
-  padding: 1.5rem;          /* Add some internal spacing */
+  padding: 1.5rem; /* Add some internal spacing */
   border: 1px solid #e5e7eb; /* A subtle border to define the form area */
-  border-radius: 8px;       /* Rounded corners to match the parent item */
-  margin: -1rem -1.5rem;      /* Negative margin to fill the parent's padding */
+  border-radius: 8px; /* Rounded corners to match the parent item */
+  margin: -1rem -1.5rem; /* Negative margin to fill the parent's padding */
 }
 
 .admin-table {
@@ -1116,7 +1126,8 @@ html, body {
   border-radius: 8px;
   border: 2px solid #000;
 }
-.admin-table th, .admin-table td {
+.admin-table th,
+.admin-table td {
   border: 1px solid #e5e7eb;
   padding: 0.5rem 0.75rem;
   text-align: left;
@@ -1126,23 +1137,25 @@ html, body {
   font-weight: 600;
 }
 .admin-table td button {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
 }
-.admin-table td .btn-save, .admin-table td .btn-cancel {
-    font-size: 1rem;
+.admin-table td .btn-save,
+.admin-table td .btn-cancel {
+  font-size: 1rem;
 }
 .admin-table tfoot td {
-    background-color: #f9fafb;
-    padding-top: 1rem;
-    border-top: 2px solid #e5e7eb;
+  background-color: #f9fafb;
+  padding-top: 1rem;
+  border-top: 2px solid #e5e7eb;
 }
 .admin-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
 }
-.admin-table th, .admin-table td {
+.admin-table th,
+.admin-table td {
   border: 1px solid #e5e7eb;
   padding: 0.5rem 0.75rem;
   text-align: left;
@@ -1152,84 +1165,87 @@ html, body {
   font-weight: 600;
 }
 .admin-table td button {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
 }
-.admin-table td .btn-save, .admin-table td .btn-cancel {
-    font-size: 1rem;
+.admin-table td .btn-save,
+.admin-table td .btn-cancel {
+  font-size: 1rem;
 }
 .admin-table tfoot td {
-    background-color: #f9fafb;
-    padding-top: 1rem;
-    border-top: 2px solid #e5e7eb;
+  background-color: #f9fafb;
+  padding-top: 1rem;
+  border-top: 2px solid #e5e7eb;
 }
 
 /* ==========================================================================
    Print-Friendly Styles
    ========================================================================== */
 
-   @media print {
-    /* Hide everything on the page by default */
-    body * {
-      visibility: hidden;
-    }
-  
-    /* Only show the printable container and its children */
-    .printable-container, .printable-container * {
-      visibility: visible;
-    }
-  
-    /* Position the printable container at the top-left of the page */
-    .printable-container {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-    }
-  
-    /* Basic table styling for the print view */
-    .print-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12pt;
-      margin-top: 20px;
-    }
-    .print-table th, .print-table td {
-      border: 1px solid #000;
-      padding: 8px;
-      text-align: left;
-    }
-    .print-table th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-    .print-title {
-      font-size: 18pt;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+@media print {
+  /* Hide everything on the page by default */
+  body * {
+    visibility: hidden;
   }
-  /* ... at the end of the file, inside @media print */
+
+  /* Only show the printable container and its children */
+  .printable-container,
+  .printable-container * {
+    visibility: visible;
+  }
+
+  /* Position the printable container at the top-left of the page */
+  .printable-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* Basic table styling for the print view */
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12pt;
+    margin-top: 20px;
+  }
+  .print-table th,
+  .print-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+  }
+  .print-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  .print-title {
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+/* ... at the end of the file, inside @media print */
 
 @media print {
   /* ... existing print styles ... */
-  
+
   .print-nested-table {
     width: 100%;
     margin-top: 5px;
     border: 1px solid #ccc;
     font-size: 10pt;
   }
-  .print-nested-table th, .print-nested-table td {
+  .print-nested-table th,
+  .print-nested-table td {
     border: 1px solid #ddd;
     padding: 4px;
   }
 }
-.modal-content{
+.modal-content {
   background-color: lightgray;
   border-radius: 12px;
   padding: 3rem;
   border: 1px solid;
-  
-} 
+}
