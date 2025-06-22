@@ -12,6 +12,7 @@ const obraSocialRoutes = require("./routes/obraSocialRoutes");
 const clientesRoutes = require("./routes/clientesRoutes");
 const proveedoresRoutes = require("./routes/proveedoresRoutes");
 const medicamentosProvRoutes = require("./routes/medicamentosProvRoutes");
+const comprasAdminRoutes = require("./routes/comprasAdminRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -41,6 +42,7 @@ app.use("/api/obras-sociales", obraSocialRoutes);
 app.use("/api/clientes", clientesRoutes);
 app.use("/api/proveedores", proveedoresRoutes);
 app.use("/api/medicamentos-prov", medicamentosProvRoutes);
+app.use("/api/compras-admin", comprasAdminRoutes); // <-- Add this line to register the route
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

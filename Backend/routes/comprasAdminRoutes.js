@@ -1,3 +1,7 @@
-const comprasAdminRoutes = require("./routes/comprasAdminRoutes");
+const express = require("express");
+const router = express.Router();
+const { createCompra } = require("../controllers/comprasAdminController");
 
-app.use("/api/compras-admin", comprasAdminRoutes);
+router.post("/create", createCompra);
+
+module.exports = router;
