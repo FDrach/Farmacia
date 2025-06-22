@@ -1,9 +1,11 @@
 import useFiltroCategoriaStore from "../store/filtroCategoriaStore";
 import { useProductos } from "../hooks/useProductos";
+import useCarritoStore from "../store/carritoStore";
 
 export default function Productos() {
   const { productos, loading, error } = useProductos();
   const { categoriaSeleccionada } = useFiltroCategoriaStore();
+  const agregarProducto = useCarritoStore((state) => state.agregarProducto);
 
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>{error}</p>;
@@ -32,7 +34,12 @@ export default function Productos() {
               : "Sin categoría"}
           </div>
           <div className="producto-precio">${prod.precio}</div>
-          <button className="producto-btn">Añadir al carrito</button>
+          <button
+            className="producto-btn"
+            onClick={() => agregarProducto({ ...prod, cantidad: 1 })}
+          >
+            Añadir al carrito
+          </button>
         </div>
       ))}
     </div>

@@ -164,6 +164,7 @@ export default function Navbar() {
                   onClick={() => {
                     setCategoria(null);
                     setCategoriasOpen(false);
+                    navigate("/Productos");
                   }}
                 >
                   Todas las categorías
@@ -210,7 +211,7 @@ export default function Navbar() {
                   <ul className="navbar-cart-list">
                     {carrito.map((item, idx) => (
                       <li key={idx} className="navbar-cart-item">
-                        {item.nombre} <span style={{ color: "#888" }}>x{item.cantidad}</span>
+                        {item.Nombre || item.nombre} <span style={{ color: "#888" }}>x{item.cantidad}</span>
                       </li>
                     ))}
                   </ul>

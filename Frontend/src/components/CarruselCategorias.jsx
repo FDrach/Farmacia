@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import useCategoriasStore from "../store/categoriasStore";
+import useFiltroCategoriaStore from "../store/filtroCategoriaStore";
+import { useNavigate } from "react-router-dom";
 
 export default function CarruselCategorias() {
   const { categorias, cargando, error, fetchCategorias } = useCategoriasStore();
   const [start, setStart] = useState(0);
   const visible = 5;
+  const setCategoria = useFiltroCategoriaStore((state) => state.setCategoria);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategorias();
@@ -34,6 +38,12 @@ export default function CarruselCategorias() {
     setStart((s) => (s + 1) % categorias.length);
   };
 
+  // --- AQUI VIENE LA FUNCIONALIDAD ---
+  const handleCategoriaClick = (cat) => {
+    setCategoria(cat.nombre);
+    navigate("/Productos");
+  };
+
   return (
     <div className="carrusel-categorias-container">
       <h2 className="carrusel-categorias-titulo">CATEGORÍAS</h2>
@@ -43,7 +53,12 @@ export default function CarruselCategorias() {
         </button>
         <div className="carrusel-categorias-lista">
           {getVisibleCategorias().map((cat) => (
-            <div key={cat.id} className="carrusel-categorias-card">
+            <div
+              key={cat.id}
+              className="carrusel-categorias-card"
+              style={{ cursor: "pointer" }}
+              onClick={() => handleCategoriaClick(cat)}
+            >
               <div className="carrusel-categorias-img">
                 <i className="fas fa-box-open" style={{ fontSize: "3rem", color: "#38b24a" }}></i>
               </div>
