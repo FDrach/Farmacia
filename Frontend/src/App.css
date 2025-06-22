@@ -727,9 +727,11 @@ body {
   width: 220px;
   padding: 1.2rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* This is key for vertical alignment */
   align-items: center;
+  text-align: center; /* Center text inside the card */
 }
+
 .producto-img-placeholder {
   width: 100%;
   height: 120px;
@@ -740,22 +742,34 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .producto-nombre {
   font-size: 1.1rem;
   margin: 0.5rem 0;
+  font-weight: 600; /* Added for better visibility */
+  height: 50px; /* Give a fixed height to the name container */
+  display: flex; /* Use flex to center content vertically */
+  align-items: center;
+  justify-content: center;
 }
+
 .producto-categorias {
   color: #888;
-  font-size: 0.95rem;
+  font-size: 0.9rem; /* Slightly smaller font */
   margin-bottom: 0.5rem;
+  height: 40px; /* Give a fixed height to categories */
+  overflow: hidden; /* Hide overflow if categories are too long */
 }
+
 .producto-precio {
   font-weight: bold;
   font-size: 1.2rem;
   color: #38b24a;
+  margin-bottom: 1rem; /* Add some space before the button */
 }
+
 .producto-btn {
-  margin-top: 1rem;
+  margin-top: auto; /* Pushes the button to the bottom */
   background: #38b24a;
   color: #fff;
   border: none;
@@ -764,6 +778,7 @@ body {
   cursor: pointer;
   font-weight: bold;
   transition: background 0.2s;
+  width: 100%; /* Make button take full width of the card padding */
 }
 .producto-btn:hover {
   background: #2e8c3a;
