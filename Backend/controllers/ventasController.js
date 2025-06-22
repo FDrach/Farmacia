@@ -1,9 +1,7 @@
-const { connection } = require("../config/db"); 
-
+const { connection } = require("../config/db");
 function formatDateToMySQL(date) {
-  return date.toISOString().slice(0, 19).replace('T', ' ');
+  return date.toISOString().slice(0, 19).replace("T", " ");
 }
-
 const getVentasDetalladas = (req, res) => {
   const query = `
         WITH VentaItems AS (
@@ -72,37 +70,47 @@ const getVentasDetalladas = (req, res) => {
     res.status(200).json(formattedResults);
   });
 };
-
 async function crearVenta(req, res) {
   try {
-    const { id_cliente, id_usuario, total, metodo_pago, fecha, medicamentos_vendidos } = req.body;
+    const {
+      id_cliente,
+      id_usuario,
+      total,
+      metodo_pago,
+      fecha,
+      medicamentos_vendidos,
+    } = req.body;
 
-    // Validación: no permitir undefined
-    if ([id_cliente, id_usuario, total, metodo_pago].includes(undefined)) {
+    if ([id_usuario, total, metodo_pago].includes(undefined)) {
       return res.status(400).json({ error: "Faltan datos obligatorios" });
     }
 
-    // Insertar venta principal
-    const [result] = await connection.promise().execute(
-      'INSERT INTO Ventas (id_cliente, id_usuario, Total, fecha, metodo_pago) VALUES (?, ?, ?, ?, ?)',
-      [id_cliente, id_usuario, total, fecha, metodo_pago]
-    );
+    const [result] = await connection
+      .promise()
+      .execute(
+        "INSERT INTO Ventas (id_cliente, id_usuario, Total, fecha, metodo_pago) VALUES (?, ?, ?, ?, ?)",
+        [id_cliente, id_usuario, total, fecha, metodo_pago]
+      );
 
     const id_venta = result.insertId;
 
-    // Insertar medicamentos vendidos (detalle)
-    if (Array.isArray(medicamentos_vendidos)) {
+    if (
+      Array.isArray(medicamentos_vendidos) &&
+      medicamentos_vendidos.length > 0
+    ) {
       for (const med of medicamentos_vendidos) {
-        await connection.promise().execute(
-          'INSERT INTO Venta_Medicamento (id_venta, id_medicamento, cantidad, precio_unitario_venta, descuento_aplicado) VALUES (?, ?, ?, ?, ?)',
-          [
-            id_venta,
-            med.medicamento_id,
-            med.cantidad,
-            med.precio_unitario_venta,
-            med.descuento_aplicado ?? 0
-          ]
-        );
+        await connection
+          .promise()
+          .execute(
+            "INSERT INTO Venta_Medicamento (id_venta, id_medicamento, cantidad, precio_unitario_venta, descuento_aplicado) VALUES (?, ?, ?, ?, ?)",
+            [
+              id_venta,
+              med.medicamento_id,
+              med.cantidad,
+              med.precio_unitario_venta,
+              med.descuento_aplicado ?? 0,
+            ]
+          );
       }
     }
 
@@ -113,11 +121,13 @@ async function crearVenta(req, res) {
       total,
       fecha,
       metodo_pago,
-      medicamentos_vendidos
+      medicamentos_vendidos,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al registrar la venta" });
+    console.error("Error en crearVenta:", error);
+    res
+      .status(500)
+      .json({ error: "Error al registrar la venta", details: error.message });
   }
 }
 
