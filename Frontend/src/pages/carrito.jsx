@@ -1,9 +1,22 @@
+import { useState } from "react";
 import useCarritoStore from "../store/carritoStore";
+import ModalPago from "../components/ModalPago";
 
 export default function Carrito() {
   const { carrito, quitarProducto, vaciarCarrito } = useCarritoStore();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const total = carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
+
+  const handlePagar = (metodo, pago, vuelto) => {
+    setModalOpen(false);
+    vaciarCarrito();
+    if (metodo === "efectivo") {
+      alert(`¡Gracias por tu compra!\nPagaste $${pago}, tu vuelto es $${vuelto}`);
+    } else {
+      alert("¡Gracias por tu compra con tarjeta!");
+    }
+  };
 
   return (
     <div className="carrito-page">
@@ -26,10 +39,16 @@ export default function Carrito() {
           <button onClick={vaciarCarrito}>Vaciar carrito</button>
           <button
             style={{ marginLeft: "1rem" }}
-            onClick={() => alert("¡Gracias por tu compra!")}
+            onClick={() => setModalOpen(true)}
           >
             Pagar
           </button>
+          <ModalPago
+            open={modalOpen}
+            total={total}
+            onClose={() => setModalOpen(false)}
+            onPagar={handlePagar}
+          />
         </>
       )}
     </div>

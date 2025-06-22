@@ -1,4 +1,8 @@
-const { connection } = require("../config/db");
+const { connection } = require("../config/db"); 
+
+function formatDateToMySQL(date) {
+  return date.toISOString().slice(0, 19).replace('T', ' ');
+}
 
 const getVentasDetalladas = (req, res) => {
   const query = `
@@ -69,6 +73,55 @@ const getVentasDetalladas = (req, res) => {
   });
 };
 
+async function crearVenta(req, res) {
+  try {
+    const { id_cliente, id_usuario, total, metodo_pago, fecha, medicamentos_vendidos } = req.body;
+
+    // Validación: no permitir undefined
+    if ([id_cliente, id_usuario, total, metodo_pago].includes(undefined)) {
+      return res.status(400).json({ error: "Faltan datos obligatorios" });
+    }
+
+    // Insertar venta principal
+    const [result] = await connection.promise().execute(
+      'INSERT INTO Ventas (id_cliente, id_usuario, Total, fecha, metodo_pago) VALUES (?, ?, ?, ?, ?)',
+      [id_cliente, id_usuario, total, fecha, metodo_pago]
+    );
+
+    const id_venta = result.insertId;
+
+    // Insertar medicamentos vendidos (detalle)
+    if (Array.isArray(medicamentos_vendidos)) {
+      for (const med of medicamentos_vendidos) {
+        await connection.promise().execute(
+          'INSERT INTO Venta_Medicamento (id_venta, id_medicamento, cantidad, precio_unitario_venta, descuento_aplicado) VALUES (?, ?, ?, ?, ?)',
+          [
+            id_venta,
+            med.medicamento_id,
+            med.cantidad,
+            med.precio_unitario_venta,
+            med.descuento_aplicado ?? 0
+          ]
+        );
+      }
+    }
+
+    res.json({
+      id: id_venta,
+      id_cliente,
+      id_usuario,
+      total,
+      fecha,
+      metodo_pago,
+      medicamentos_vendidos
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al registrar la venta" });
+  }
+}
+
 module.exports = {
   getVentasDetalladas,
+  crearVenta,
 };
