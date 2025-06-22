@@ -1123,3 +1123,71 @@ body {
     padding: 4px;
   }
 }
+
+/* --------------------------------------------------------------------------
+      5. CARRITO PAGE STYLES
+      ========================================================================== */
+.carrito-page {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px #0002;
+  padding: 2rem 2.5rem 2rem 2.5rem;
+}
+
+.carrito-page h2 {
+  color: #38b24a;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.carrito-page ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.carrito-page li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1.1rem;
+}
+
+.carrito-page li:last-child {
+  border-bottom: none;
+}
+
+.carrito-page button {
+  background: #38b24a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: background 0.2s;
+}
+
+.carrito-page button:hover {
+  background: #2e8c3a;
+}
+
+.carrito-page strong {
+  font-size: 1.2rem;
+  color: #222;
+  display: block;
+  margin: 1rem 0;
+}
+
+.carrito-page p {
+  text-align: center;
+  color: #888;
+  font-size: 1.1rem;
+}
