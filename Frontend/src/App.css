@@ -1465,3 +1465,9 @@ body {
   font-size: 1.2rem;
 }
 
+/* Admin form fade out effect */
+.admin-form.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+

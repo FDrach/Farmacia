@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMedicamentosAdmin } from "../../hooks/useMedicamentosAdmin";
 import PrintButton from "../../components/PrintButton";
+import Notificacion from "../../components/Notificacion";
 import "../../App.css";
 
 export default function MedicamentosAdmin() {
@@ -16,6 +17,7 @@ export default function MedicamentosAdmin() {
   } = useMedicamentosAdmin();
   const [editingId, setEditingId] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [notificacion, setNotificacion] = useState({ visible: false, mensaje: "" });
 
   if (loading) return <p className="loading-message">Cargando...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -28,6 +30,13 @@ export default function MedicamentosAdmin() {
         imageFormData.append("medicamentoImage", file);
         await uploadImage(editingId, imageFormData);
       }
+      setNotificacion({ visible: true, mensaje: "Artículo actualizado con éxito" });
+      // Espera el fade-out antes de actualizar la lista
+      setTimeout(() => {
+        setEditingId(null); // Esto cierra el form
+        setNotificacion({ visible: false, mensaje: "" });
+        
+      }, 500); // Igual que el tiempo de la animación
     } else {
       const newId = await addMedicamento(data);
       if (file && newId) {
@@ -60,6 +69,7 @@ export default function MedicamentosAdmin() {
 
   return (
     <div className="admin-list-container">
+      <Notificacion mensaje={notificacion.mensaje} visible={notificacion.visible} />
       <div className="admin-list-header">
         <h3>Lista de Medicamentos</h3>
         <div>
@@ -166,6 +176,7 @@ function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
     categorias: getInitialCategoryIds(),
   });
   const [selectedFile, setSelectedFile] = useState(null);
+  const [closing, setClosing] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -196,14 +207,21 @@ function MedicamentoForm({ medicamento, allCategorias, onSave, onCancel }) {
     };
     try {
       await onSave(dataToSubmit, selectedFile);
-      onCancel();
+      setClosing(true); // Activa la animación
+      setTimeout(() => {
+        setClosing(false);
+        onCancel();
+      }, 500); // 500ms para la animación
     } catch (err) {
       alert(err.message);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="admin-form">
+    <form
+      onSubmit={handleSubmit}
+      className={`admin-form${closing ? " fade-out" : ""}`}
+    >
       <h4 style={{ margin: "0 0 1rem 0", color: "#1f2937" }}>
         {medicamento ? "Editando Medicamento" : "Nuevo Medicamento"}
       </h4>

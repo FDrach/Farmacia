@@ -53,7 +53,7 @@ export default function PrintButton({
         Imprimir
       </button>
       {/* Hidden div for printing. Using a 'ref' is an alternative, 
-                but this state-based approach is simple and effective. */}
+        but this state-based approach is simple and effective. */}
       {printContent && (
         <div dangerouslySetInnerHTML={{ __html: printContent }} />
       )}
