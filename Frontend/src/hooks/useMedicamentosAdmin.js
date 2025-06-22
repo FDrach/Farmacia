@@ -66,6 +66,25 @@ export function useMedicamentosAdmin() {
     }
   };
 
+  const uploadImage = async (id, formData) => {
+    try {
+      await axios.post(
+        `${API_BASE_URL}/medicamentos/${id}/upload-image`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Error uploading image:", err);
+      throw new Error(
+        err.response?.data?.message || "Error al subir la imagen."
+      );
+    }
+  };
+
   return {
     medicamentos,
     categorias,
@@ -74,5 +93,6 @@ export function useMedicamentosAdmin() {
     addMedicamento,
     updateMedicamento,
     removeMedicamento,
+    uploadImage,
   };
 }

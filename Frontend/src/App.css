@@ -784,6 +784,38 @@ body {
   background: #2e8c3a;
 }
 
+.producto-img-placeholder {
+  width: 100%;
+  height: 120px;
+  background: #f7f7f7;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Hide parts of the image that don't fit */
+}
+
+/* New class for the product image */
+.producto-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This will scale the image to cover the container, cropping if necessary */
+  transition: transform 0.3s ease;
+}
+
+.producto-card:hover .producto-img {
+  transform: scale(1.05); /* Add a subtle zoom effect on hover */
+}
+
+/* Style for the fallback icon */
+.fallback-icon {
+  font-size: 2.5rem;
+  color: #38b24a;
+}
+
+/* ... rest of the CSS ... */
+
 /* ==========================================================================
       3. ADMIN PAGE STYLES
       ========================================================================== */
