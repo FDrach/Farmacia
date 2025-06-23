@@ -13,7 +13,7 @@ export function useClientesAdmin() {
     try {
       const [clientesRes, obrasSocialesRes] = await Promise.all([
         axios.get(`${API_BASE_URL}/clientes`),
-        axios.get(`${API_BASE_URL}/obras-sociales`),
+        axios.get(`${API_BASE_URL}/obras_sociales`),
       ]);
       setClientes(clientesRes.data);
       setObrasSociales(obrasSocialesRes.data);
@@ -64,7 +64,7 @@ export function useClientesAdmin() {
   const addObraSocial = async (osData) => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/obras-sociales/create`,
+        `${API_BASE_URL}/obras_sociales/create`,
         osData
       );
       await fetchData();

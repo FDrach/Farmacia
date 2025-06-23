@@ -42,7 +42,7 @@ app.use("/api/usuarios", usuariosRoutes);
 app.use("/api/compras", comprasRoutes);
 app.use("/api/categorias", categoriasRoutes);
 app.use("/api", authRoutes);
-app.use("/api/obras-sociales", obraSocialRoutes);
+app.use("/api/obras_sociales", obraSocialRoutes);
 app.use("/api/clientes", clientesRoutes);
 app.use("/api/proveedores", proveedoresRoutes);
 app.use("/api/medicamentos-prov", medicamentosProvRoutes);
