@@ -37,10 +37,10 @@ Este proyecto es una **Single Page Application (SPA)** construida con el stack *
         DB_PASSWORD=tu_contraseña_mysql
         DB_DATABASE=Farmacia
         ```
-    -   Importa el esquema y los datos iniciales ejecutando los scripts de `Backend/sql/` en tu base de datos MySQL:
-        1.  `CrearDB.sql`
-        2.  `vistas.sql`
-        3.  `Insert.sql`
+    -   Importa el esquema y los datos iniciales ejecutando los scripts de ~~`Backend/sql/`~~ `Dump20250623.sql` en tu base de datos MySQL:
+        1.  ~~`CrearDB.sql`~~
+        2.  ~~`vistas.sql`~~
+        3.  ~~`Insert.sql`~~
     -   Inicia el servidor backend:
         ```bash
         npm run dev
