@@ -1,42 +1,57 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import PrintVentas from "./PrintVentas";
+import "../App.css";
 
 export default function VentasList() {
   const [ventas, setVentas] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/ventas")
-      .then(res => {
+    axios
+      .get("http://localhost:8080/api/ventas")
+      .then((res) => {
         setVentas(res.data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
 
-  if (loading) return <p>Cargando ventas...</p>;
+  if (loading) return <p className="loading-message">Cargando ventas...</p>;
 
   return (
-    <div>
-      <h3>Ventas registradas</h3>
+    <div className="admin-list-container">
+      <div className="admin-list-header">
+        <h3>Historial de Ventas</h3>
+        {/* Add the print button here */}
+        <PrintVentas />
+      </div>
+
       {ventas.length === 0 ? (
         <p>No hay ventas registradas.</p>
       ) : (
         ventas.map((venta) => (
-          <div key={venta.venta_id} style={{border: "1px solid #ccc", margin: "1rem 0", padding: "1rem"}}>
-            <b>Venta #{venta.venta_id}</b> - {new Date(venta.fecha).toLocaleString("es-AR", { dateStyle: "short", timeStyle: "short" })} <br />
-            Cliente: {venta.cliente_nombre} <br />
-            Empleado: {venta.empleado_nombre} <br />
-            Método de pago: {venta.metodo_pago} <br />
-            Total: ${venta.Total} <br />
-            <b>Medicamentos vendidos:</b>
-            <ul>
-              {venta.medicamentos_vendidos.map((med, idx) => (
-                <li key={idx}>
-                  {med.nombre} x{med.cantidad} - ${med.precio_unitario_venta}
-                </li>
-              ))}
-            </ul>
+          <div key={venta.venta_id} className="admin-list-item">
+            <div className="item-main-info">
+              <span className="item-title">Venta #{venta.venta_id}</span>
+              <span className="item-price">${venta.Total}</span>
+            </div>
+            <div className="item-details">
+              <p>
+                <strong>Fecha:</strong>{" "}
+                {new Date(venta.fecha).toLocaleString("es-AR")}
+              </p>
+              <p>
+                <strong>Cliente:</strong>{" "}
+                {venta.cliente_nombre || "Consumidor Final"}
+              </p>
+              <p>
+                <strong>Empleado:</strong> {venta.empleado_nombre || "N/A"}
+              </p>
+              <p>
+                <strong>Método de pago:</strong> {venta.metodo_pago}
+              </p>
+            </div>
           </div>
         ))
       )}
