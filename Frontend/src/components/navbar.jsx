@@ -7,6 +7,8 @@ import useAuthStore from "../store/authStore";
 import useCarritoStore from "../store/carritoStore";
 import useCategoriasStore from "../store/categoriasStore";
 import useFiltroCategoriaStore from "../store/filtroCategoriaStore";
+import { useSearch } from "../hooks/useSearch";
+import SearchResults from "./SearchResults";
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -15,14 +17,16 @@ export default function Navbar() {
   const [cartOpen, setCartOpen] = useState(false);
   const [categoriasOpen, setCategoriasOpen] = useState(false);
   const [drawerCategoriasOpen, setDrawerCategoriasOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  
+
+  const { searchTerm, setSearchTerm, results, isSearching, clearSearch } =
+    useSearch();
+
   const menuRef = useRef();
   const cartRef = useRef();
   const categoriasRef = useRef();
+  const searchRef = useRef();
   const navigate = useNavigate();
 
-  // Obtener usuario y acciones del store
   const { usuario, logout } = useAuthStore();
   const { carrito } = useCarritoStore();
   const { categorias, fetchCategorias } = useCategoriasStore();
@@ -42,9 +46,14 @@ export default function Navbar() {
     e.preventDefault();
     if (searchTerm.trim()) {
       navigate(`/Productos?search=${encodeURIComponent(searchTerm.trim())}`);
+      clearSearch();
     } else {
       navigate("/Productos");
     }
+  };
+
+  const handleResultClick = () => {
+    clearSearch();
   };
 
   useEffect(() => {
@@ -61,15 +70,17 @@ export default function Navbar() {
       ) {
         setCategoriasOpen(false);
       }
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        clearSearch();
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [clearSearch]);
 
   return (
     <>
       <nav className="navbar">
-        {/* ... (Navbar logo, search bar) ... */}
         <div className="navbar-logo-link">
           <Link to="/">
             <img
@@ -89,7 +100,7 @@ export default function Navbar() {
             <span />
           </button>
         </div>
-        <div className="navbar-list-center">
+        <div className="navbar-list-center" ref={searchRef}>
           <form className="navbar-search" onSubmit={handleSearchSubmit}>
             <input
               type="text"
@@ -102,9 +113,14 @@ export default function Navbar() {
               <i className="fas fa-search"></i>
             </button>
           </form>
+          {isSearching && (
+            <SearchResults
+              results={results}
+              onResultClick={handleResultClick}
+            />
+          )}
         </div>
         <div className="navbar-list-right">
-          {/* Admin Link */}
           {usuario && usuario.tipo === "Administrador" && (
             <Link to="/administrador" className="navbar-link">
               <i className="fas fa-cogs"></i>
@@ -151,6 +167,7 @@ export default function Navbar() {
               <span className="navbar-text">Iniciar sesión</span>
             </Link>
           )}
+
           <div
             className="navbar-link"
             style={{ position: "relative" }}
@@ -201,6 +218,7 @@ export default function Navbar() {
               </div>
             )}
           </div>
+
           <div
             className="navbar-link"
             style={{ position: "relative" }}
@@ -213,7 +231,6 @@ export default function Navbar() {
             >
               <i className="fas fa-shopping-cart"></i>
               <span className="navbar-text">Tu carrito</span>
-              {/* Número de productos */}
               {carrito.length > 0 && (
                 <span className="navbar-cart-badge">{carrito.length}</span>
               )}
@@ -252,7 +269,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      {/* ... (Drawer and Login Modal) ... */}
       <div
         className={`drawer-backdrop${drawerOpen ? " open" : ""}`}
         onClick={() => setDrawerOpen(false)}
@@ -262,7 +278,7 @@ export default function Navbar() {
           className="drawer-close-btn"
           onClick={() => setDrawerOpen(false)}
         >
-          
+          ×
         </button>
         <ul className="drawer-list">
           <li>

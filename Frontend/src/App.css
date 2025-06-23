@@ -1536,3 +1536,70 @@ body {
   margin-top: 0.2rem;
 }
 
+
+/* ==========================================================================
+   Search Results Dropdown
+   ========================================================================== */
+   .search-results-dropdown {
+    position: absolute;
+    top: calc(100% + 5px); /* Position it slightly below the search bar */
+    left: 0;
+    width: 100%; /* Make it the same width as the parent (.navbar-search) */
+    max-height: 400px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px; /* Add border-radius to all corners */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #f0f0f0;
+}
+.search-result-item:last-child {
+    border-bottom: none;
+}
+.search-result-item:hover {
+    background-color: #f7f7f7;
+}
+
+.search-result-img, .search-result-img-fallback { /* Target both image and fallback */
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    background-color: #f0f0f0;
+    flex-shrink: 0; /* Prevent the icon/image from shrinking */
+}
+
+/* New class specifically for the fallback icon container */
+.search-result-img-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem; /* Make the icon a bit smaller */
+    color: #38b24a;
+}
+
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-result-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.search-result-price {
+    font-size: 0.9rem;
+    color: #38b24a;
+}
