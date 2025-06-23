@@ -16,6 +16,7 @@ import ComprasAdmin from "./pages/admin/ComprasAdmin";
 import VentasList from "./components/VentasList";
 import Faq from "./pages/Faq";
 import CarouselAdmin from "./pages/admin/CarouselAdmin";
+import OSPages from './pages/OSPages';
 import "./App.css";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/Productos" element={<Productos />} />
             <Route path="/Carrito" element={<Carrito />} />
             <Route path="/faq" element={<Faq />} />
+            <Route path="/Obras-Sociales" element={<OSPages />} />
 
             {/* Admin Routes */}
             <Route
