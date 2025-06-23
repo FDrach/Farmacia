@@ -1435,39 +1435,104 @@ body {
 .modal-pago-confirmar:hover:not(:disabled) {
   background: #2e8c3a;
 }
-.modal-pago-efectivo {
+.modal-pago-tarjeta {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.2rem;
   width: 100%;
 }
-.modal-pago-efectivo-row {
+
+.modal-pago-tarjeta form {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 1rem;
   width: 100%;
-  justify-content: center;
+  align-items: center;
 }
-.modal-pago-efectivo input {
-  width: 140px;
+
+.modal-pago-tarjeta label {
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 320px;
+}
+
+.modal-pago-tarjeta input {
+  width: 100%;
   min-width: 100px;
-  max-width: 180px;
+  max-width: 320px;
   box-sizing: border-box;
   font-size: 1.1rem;
   padding: 0.4rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  margin-top: 0.2rem;
 }
-.modal-pago-efectivo .vuelto {
-  color: #38b24a;
-  font-weight: bold;
-  font-size: 1.2rem;
+
+.modal-pago-confirmar {
+  margin-top: 1rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  border: none;
+  background: #38b24a;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-pago-confirmar:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 /* Admin form fade out effect */
 .admin-form.fade-out {
   opacity: 0;
   transition: opacity 0.5s;
+}
+
+/* --------------------------------------------------------------------------
+      6. TARJETA PAGE STYLES
+      ========================================================================== */
+.tarjeta-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+}
+
+.tarjeta-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.tarjeta-form-row label {
+  font-size: 1.05rem;
+  color: #222;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tarjeta-form-row input,
+.tarjeta-form-row select {
+  width: 100%;
+  min-width: 80px;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 0.2rem;
 }
 

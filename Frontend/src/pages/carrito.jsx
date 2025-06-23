@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useCarritoStore from "../store/carritoStore";
+import useAuthStore from "../store/authStore";
 import ModalPago from "../components/ModalPago";
 import Notificacion from "../components/Notificacion";
 
 export default function Carrito() {
   const { carrito, quitarProducto, vaciarCarrito } = useCarritoStore();
+  const { usuario } = useAuthStore();
   const [modalOpen, setModalOpen] = useState(false);
   const [noti, setNoti] = useState({ visible: false, mensaje: "" });
 
@@ -22,8 +24,15 @@ export default function Carrito() {
 
   const handlePagar = (metodo, pago, vuelto) => {
     vaciarCarrito();
-
     mostrarNoti("¡Venta registrada con éxito!");
+  };
+
+  const handleOpenModal = () => {
+    if (!usuario) {
+      alert("Por favor, inicie sesión para realizar el pago.");
+      return;
+    }
+    setModalOpen(true);
   };
 
   return (
@@ -38,7 +47,7 @@ export default function Carrito() {
             {carrito.map((prod) => (
               <li key={prod.id}>
                 {prod.Nombre} x{prod.cantidad} - $
-                {prod.precio * prod.cantidad}
+                {(prod.precio * prod.cantidad).toFixed(2)}
                 <button onClick={() => quitarProducto(prod.id)}>
                   Quitar
                 </button>
@@ -49,19 +58,19 @@ export default function Carrito() {
             <strong>Total: ${total.toFixed(2)}</strong>
           </div>
           <button onClick={vaciarCarrito}>Vaciar carrito</button>
-          <button
-            style={{ marginLeft: "1rem" }}
-            onClick={() => setModalOpen(true)}
-          >
+          <button style={{ marginLeft: "1rem" }} onClick={handleOpenModal}>
             Pagar
           </button>
-          <ModalPago
-            open={modalOpen}
-            total={total}
-            onClose={() => setModalOpen(false)}
-            onPagar={handlePagar}
-            carrito={carrito}
-          />
+          {modalOpen && (
+            <ModalPago
+              open={modalOpen}
+              total={total}
+              onClose={() => setModalOpen(false)}
+              onPagar={handlePagar}
+              carrito={carrito}
+              id_cliente={null}
+            />
+          )}
         </>
       )}
     </div>
