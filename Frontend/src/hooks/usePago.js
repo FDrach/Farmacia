@@ -2,7 +2,13 @@ import { useState } from "react";
 import useVentaStore from "../store/ventaStore";
 import useAuthStore from "../store/authStore";
 
-export function usePago({ id_cliente, total, carrito, onPagar, obrasSociales }) {
+export function usePago({
+  id_cliente,
+  total,
+  carrito,
+  onPagar,
+  obrasSociales,
+}) {
   const [metodo, setMetodo] = useState("");
   const [pago, setPago] = useState("");
   const [vuelto, setVuelto] = useState(null);
@@ -29,7 +35,7 @@ export function usePago({ id_cliente, total, carrito, onPagar, obrasSociales }) 
     const os = obrasSociales?.find((os) => os.nombre === obraSocial);
     let totalConDescuento = total;
     if (os && os.descuento) {
-      totalConDescuento = total * (1 - os.descuento / 100);
+      totalConDescuento = total * (1 - os.descuento);
     }
     const num = parseFloat(value);
     if (!isNaN(num) && num >= totalConDescuento) {
@@ -49,28 +55,34 @@ export function usePago({ id_cliente, total, carrito, onPagar, obrasSociales }) 
       return;
     }
 
-    // Aplica descuento según la obra social seleccionada
     let totalConDescuento = total;
     const os = obrasSociales?.find((os) => os.nombre === obraSocial);
     if (os && os.descuento) {
-      totalConDescuento = total * (1 - os.descuento / 100);
+      totalConDescuento = total * (1 - os.descuento);
     }
 
     try {
+      const medicamentosParaVenta = carrito.map((prod) => ({
+        medicamento_id: prod.id,
+        cantidad: prod.cantidad,
+        precio_unitario_venta: prod.precio,
+        descuento_aplicado: 0,
+      }));
+
       const ventaData = {
         id_cliente,
         id_usuario: usuario.id,
         total: totalConDescuento,
         metodo_pago,
         fecha: new Date().toISOString().slice(0, 19).replace("T", " "),
-        medicamentos_vendidos: carrito,
+        medicamentos_vendidos: medicamentosParaVenta,
         obra_social: obraSocial,
       };
+
       const res = await guardarVenta(ventaData);
       setFactura(res);
       onPagar && onPagar(metodo_pago, pago, vuelto);
 
-      // Limpia campos de tarjeta
       if (metodo_pago === "tarjeta") {
         setNombreTarjeta("");
         setNumeroTarjeta("");
@@ -86,7 +98,7 @@ export function usePago({ id_cliente, total, carrito, onPagar, obrasSociales }) 
 
   return {
     metodo,
-    setMetodo,
+    setMetodo: handleMetodo,
     pago,
     setPago,
     vuelto,

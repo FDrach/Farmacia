@@ -17,7 +17,7 @@ export default function OSPages() {
         <ul className="os-list">
           {obrasSociales.map((obra, index) => (
             <li key={index} className="os-item">
-              {obra.nombre}
+              {obra.nombre}: {obra.descuento*100}%
             </li>
           ))}
         </ul>
