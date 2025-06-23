@@ -1328,12 +1328,19 @@ body {
 .modal-pago {
   background: #fff;
   border-radius: 16px;
-  padding: 2rem 2.5rem;
-  min-width: 320px;
+  padding: 2rem 1.2rem;
+  min-width: 0;
+  max-width: 360px; /* Cambia aquí para hacerlo más angosto */
+  width: 100%;
   box-shadow: 0 8px 32px #0003;
   position: relative;
   text-align: center;
+  margin: 0 auto; /* Centra el modal en su contenedor */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .modal-pago-close {
   position: absolute;
   top: 1rem;
@@ -1417,6 +1424,10 @@ body {
   color: #444;
 }
 .modal-pago-confirmar {
+  width: 100%;
+  max-width: 340px;
+  margin: 1.2rem auto 0 auto; /* Esto centra el botón */
+  display: block;
   background: #38b24a;
   color: #fff;
   border: none;
@@ -1441,6 +1452,16 @@ body {
   align-items: center;
   gap: 1.2rem;
   width: 100%;
+  max-width: 500px;
+}
+
+/* Haz los campos internos más anchos */
+.modal-pago-tarjeta select,
+.modal-pago-tarjeta input,
+.modal-pago-tarjeta form,
+.modal-pago-tarjeta .modal-pago-confirmar {
+  max-width: 460px;
+  min-width: 220px;
 }
 
 .modal-pago-tarjeta form {
@@ -1472,67 +1493,154 @@ body {
   margin-top: 0.2rem;
 }
 
-.modal-pago-confirmar {
-  margin-top: 1rem;
-  padding: 0.6rem 1.5rem;
-  font-size: 1.1rem;
-  border-radius: 6px;
-  border: none;
-  background: #38b24a;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.modal-pago-confirmar:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-/* Admin form fade out effect */
-.admin-form.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-/* --------------------------------------------------------------------------
-      6. TARJETA PAGE STYLES
-      ========================================================================== */
-.tarjeta-form-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Mejora el select */
+.modal-pago-efectivo select,
+.modal-pago-tarjeta select {
   width: 100%;
-  align-items: center;
-}
-
-.tarjeta-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  width: 100%;
-  max-width: 420px;
-}
-
-.tarjeta-form-row label {
-  font-size: 1.05rem;
-  color: #222;
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.tarjeta-form-row input,
-.tarjeta-form-row select {
-  width: 100%;
-  min-width: 80px;
   max-width: 100%;
-  box-sizing: border-box;
   font-size: 1.1rem;
   padding: 0.4rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1.5px solid #38b24a;
+  background: #f8fff8;
   margin-top: 0.2rem;
+  transition: border 0.2s;
+}
+
+.modal-pago-efectivo select:focus,
+.modal-pago-tarjeta select:focus {
+  outline: none;
+  border-color: #2e8c3a;
+}
+
+/* Mejora los inputs */
+.modal-pago-efectivo input,
+.modal-pago-tarjeta input {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 1.5px solid #38b24a;
+  background: #f8fff8;
+  margin-top: 0.2rem;
+  transition: border 0.2s;
+}
+
+.modal-pago-efectivo input:focus,
+.modal-pago-tarjeta input:focus {
+  outline: none;
+  border-color: #2e8c3a;
+}
+
+/* Mejora los labels */
+.modal-pago-efectivo label,
+.modal-pago-tarjeta label {
+  font-size: 1.1rem;
+  color: #38b24a;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+/* Mejora el texto de totales */
+.modal-pago-efectivo p,
+.modal-pago-tarjeta p {
+  font-size: 1.15rem;
+  margin: 0.5rem 0;
+}
+
+.modal-pago-efectivo h2,
+.modal-pago-tarjeta h2 {
+  color: #38b24a;
+  font-size: 2.1rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Botón de confirmar */
+.modal-pago-confirmar {
+  margin-top: 1.2rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.15rem;
+  border-radius: 8px;
+  border: none;
+  background: #38b24a;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 100%;
+  max-width: 340px;
+}
+
+.modal-pago-confirmar:hover:not(:disabled) {
+  background: #2e8c3a;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.modal-pago-confirmar:disabled {
+  background: #b6e2c2;
+  cursor: not-allowed;
+}
+
+/* Centrado y separación */
+.modal-pago-efectivo,
+.modal-pago-tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+/* Ajusta el ancho de los selects e inputs en el modal de pago */
+.modal-pago-efectivo select,
+.modal-pago-efectivo input {
+  width: 100%;
+  max-width: 340px;
+  min-width: 180px;
+  box-sizing: border-box;
+  margin: 0 auto 0.5rem auto;
+  display: block;
+}
+
+/* Modal de tarjeta más ancho */
+.modal-pago-tarjeta-wrapper {
+  width: 100%;
+  max-width: 520px;
+}
+
+.modal-pago-efectivo-wrapper {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Formulario de tarjeta en dos columnas */
+.tarjeta-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.2rem;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+.tarjeta-form-col-1 { grid-column: 1; }
+.tarjeta-form-col-2 { grid-column: 2; }
+.tarjeta-form-row-full { grid-column: 1 / span 2; }
+.select-doc-tipo {
+  width: 100px !important;
+  min-width: 80px;
+  max-width: 100px;
+}
+
+/* Forzar que los labels del grid ocupen solo su celda */
+.tarjeta-form-grid label {
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
