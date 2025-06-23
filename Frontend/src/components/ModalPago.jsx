@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useObrasSociales } from "../hooks/useObrasSociales";
+import { useUsuariosAdmin } from "../hooks/useUsuariosAdmin";
 import { usePago } from "../hooks/usePago";
 
 export default function ModalPago({
@@ -12,6 +13,8 @@ export default function ModalPago({
   carrito,
 }) {
   const { obrasSociales, loading: loadingObras } = useObrasSociales();
+  const { usuarios, loading: loadingUsuarios } = useUsuariosAdmin();
+  const [selectedUsuario, setSelectedUsuario] = useState(id_usuario);
   const {
     metodo,
     setMetodo,
@@ -31,8 +34,15 @@ export default function ModalPago({
     setObraSocial,
     handlePagoChange,
     handleConfirmarPago,
-  } = usePago({ id_cliente, id_usuario, total, carrito, onPagar, obrasSociales });
-
+  } = usePago({
+    id_cliente,
+    id_usuario: selectedUsuario,
+    total,
+    carrito,
+    onPagar,
+    obrasSociales,
+  });
+  // Si no hay obras sociales cargadas, no mostrar el modal
   if (!open) return null;
 
   return (
@@ -134,7 +144,7 @@ export default function ModalPago({
                   </label>
                   {/* Fila 2 */}
                   <label className="tarjeta-form-col-1">
-                    Nombre
+                    Nombre del titular
                     <input
                       type="text"
                       required
@@ -175,6 +185,26 @@ export default function ModalPago({
                     </label>
                   </div>
 
+                  {/* Fila 4: Usuario */}
+                  <div className="tarjeta-form-row-full">
+                    <label>
+                      Usuario que realiza la venta
+                      <select
+                        value={selectedUsuario}
+                        onChange={(e) => setSelectedUsuario(e.target.value)}
+                        required
+                        disabled={loadingUsuarios}
+                      >
+                        <option value="">Seleccione un usuario...</option>
+                        {usuarios.map((u) => (
+                          <option key={u.id} value={u.id}>
+                            {u.nombre}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+
                   {/* Fila 4: Obra social */}
                   <div className="tarjeta-form-row-full">
                     <label>
@@ -212,6 +242,26 @@ export default function ModalPago({
             {metodo === "efectivo" && (
               <div className="modal-pago-efectivo">
                 <h2>Efectivo</h2>
+                <div className="tarjeta-form-row">
+                  <div style={{ gridColumn: "1 / span 2" }}>
+                    <label>
+                      Usuario que realiza la venta
+                      <select
+                        value={selectedUsuario}
+                        onChange={(e) => setSelectedUsuario(e.target.value)}
+                        required
+                        disabled={loadingUsuarios}
+                      >
+                        <option value="">Seleccione un usuario...</option>
+                        {usuarios.map((u) => (
+                          <option key={u.id} value={u.id}>
+                            {u.nombre}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+                </div>
                 <div className="tarjeta-form-row">
                   <div style={{ gridColumn: "1 / span 2" }}>
                     <label>
