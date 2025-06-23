@@ -14,7 +14,8 @@ import MedicamentosAdmin from "./pages/admin/MedicamentosAdmin";
 import CategoriasAdmin from "./pages/admin/CategoriasAdmin";
 import ComprasAdmin from "./pages/admin/ComprasAdmin";
 import VentasList from "./components/VentasList";
-import Faq from './pages/Faq';
+import Faq from "./pages/Faq";
+import CarouselAdmin from "./pages/admin/CarouselAdmin";
 import "./App.css";
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
                 <Route path="categorias" element={<CategoriasAdmin />} />
                 <Route path="compras" element={<ComprasAdmin />} />
                 <Route path="ventas" element={<VentasList />} />
+                <Route path="carrusel" element={<CarouselAdmin />} />
               </Route>
             </Route>
           </Routes>

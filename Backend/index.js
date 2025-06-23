@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const fileUpload = require('express-fileupload');
+const fileUpload = require("express-fileupload");
 const { connection } = require("./config/db.js");
 
 const medicamentosRoutes = require("./routes/medicamentosRoutes");
@@ -15,6 +15,7 @@ const clientesRoutes = require("./routes/clientesRoutes");
 const proveedoresRoutes = require("./routes/proveedoresRoutes");
 const medicamentosProvRoutes = require("./routes/medicamentosProvRoutes");
 const comprasAdminRoutes = require("./routes/comprasAdminRoutes");
+const carouselRoutes = require("./routes/carouselRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -23,7 +24,7 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 connection.connect((error) => {
   if (error) {
     console.error("Error conectando a la base de datos:", error);
@@ -46,8 +47,8 @@ app.use("/api/obras_sociales", obraSocialRoutes);
 app.use("/api/clientes", clientesRoutes);
 app.use("/api/proveedores", proveedoresRoutes);
 app.use("/api/medicamentos-prov", medicamentosProvRoutes);
-app.use("/api/compras-admin", comprasAdminRoutes); // <-- Add this line to register the route
-
+app.use("/api/compras-admin", comprasAdminRoutes);
+app.use("/api/carousel-images", carouselRoutes);
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
